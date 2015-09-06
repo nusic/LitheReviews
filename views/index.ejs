@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+    <title>Liu Reviews</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+		<script src="javascripts/angularApp.js"></script>
+		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
+  </head>
+
+  <body ng-app="liuReviews">
+  	<div class="row">
+  		<div class="col-md-6 col-md-offset-3">
+  			<ui-view></ui-view>
+  		</div>
+  	</div>
+    
+    <!-- INDEX template -->
+    <script type="text/ng-template" id="/index.html">
+    	<div class="page-header">
+    		<h1>Liu Course Reviews</h1>
+    	</div>
+
+    	<div ng-repeat="course in courses | orderBy: '-satisfactionPercentage'">
+    		<a href="#/courses/{{course._id}}">
+	    		<span style="font-size:20px; margin-left:10px;">
+	    			{{course.code}}
+	    		</span>
+				</a>
+
+    		<p class="text-right" style="margin-top: -25px;font-size:17px;">
+	    		<span style="color: #2c2; font-size: 20px">☺ {{course.satisfactionPercentage}}%</span> &nbsp;&nbsp;&nbsp;
+	    		
+    		</p>
+    	</div>
+    </script>
+
+
+
+    <!-- COURSES template --> 
+    <script type="text/ng-template" id="/courses.html">
+    	<div class="page-header">
+    		<h2>{{course.code}} ({{course.year}})</h2>
+    		<h4>{{course.title}}, {{course.prof}} </h4>
+    		<span style="color: #2c2; font-size: 20px">☺ {{satisfactionPercentage()}}%</span> &nbsp;&nbsp;&nbsp;
+    		<span style="color: #c22; font-size: 20px">☹ {{100 - satisfactionPercentage()}}%</span>
+    	</div>
+
+    	<div ng-repeat="(exam, stats) in examstats">
+    		{{exam}}: {{stats}}
+    	</div>
+
+    	<div ng-repeat="review in course.reviews | orderBy: '-upvotes'" 
+    		style="font-size: 16px;">
+
+    		<!--// REVIEW TEMPLATE  -->
+  			<span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
+  			</span>
+  		
+    		<span style="margin-right: 30px;">
+    			{{review.upvotes}} 
+  			</span>
+
+  			<span style="color: #{{review.positive ? '2c2' : 'c22'}};">
+    				<span style="font-size: 20px">{{review.positive ? '☺' : '☹'}}</span> 
+    		</span>
+    		{{review.body}}
+    	</div>
+
+    	<br>
+    	<br>
+
+    	<!--// REVIEW FORM  -->
+			<div class="btn-group">
+				<label class="btn btn-success">
+					<input type="radio" class="ng-hide" ng-model="reviewType" value="+">
+						Lägg till något som är bra
+					</input>
+				</label>
+        <label class="btn btn-danger">
+        	<input type="radio" class="ng-hide" ng-model="reviewType" value="-">
+        		Lägg till något som kan bli bättre
+        	</input>
+        </label>
+    	</div>
+
+		  <form ng-hide="reviewType === undefined" ng-submit="addReview()" style="margin-top:30px;">
+				<div class="form-group">
+					<input type="text"
+						class="form-control"
+						placeholder="{{reviewType == '+' ? 'Skriv något som är bra...' : 'Skriv något som kan bli bättre... (och gärna förslag på hur)'}}" 
+						ng-model="body">
+					</input>
+				</div>
+
+				<button type="submit" class="btn btn-{{reviewType == '+' ? 'success' : 'danger'}}" >
+					Skicka {{reviewType == '+' ? ':)' : ':('}}
+				</button>
+
+			</form>
+
+    </script>
+  </body>
+</html>

@@ -10,3 +10,29 @@ a {
 .clickable:hover {
 	cursor: pointer;
 }
+
+
+/* D3 styles */
+.chart rect {
+  fill: #c22;
+}
+
+.chart text{
+	text-anchor: middle;
+}
+
+.chart .title {
+	fill: black;
+	font: 15px sans-serif;
+	font-weight: bold;
+}
+
+.chart text.bar_label {
+  fill: white;
+  font: 10px sans-serif;
+}
+
+.chart text.x_label {
+	font: 10px sans-serif;
+	color: black;
+}

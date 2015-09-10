@@ -1,0 +1,26 @@
+<div class="btn-group">
+<label class="btn btn-success">
+  <input type="radio" class="ng-hide" ng-model="reviewType" value="+">
+    Lägg till något som är bra
+  </input>
+</label>
+<label class="btn btn-danger">
+  <input type="radio" class="ng-hide" ng-model="reviewType" value="-">
+    Lägg till något som kan bli bättre
+  </input>
+</label>
+</div>
+
+<form ng-hide="reviewType === undefined" ng-submit="addReview()" style="margin-top:30px;">
+<div class="form-group">
+  <input type="text"
+    class="form-control"
+    placeholder="{{reviewType == '+' ? 'Skriv något som är bra' : 'Skriv något som kan bli bättre, och ge gärna förslag på hur'}}" 
+    ng-model="body">
+  </input>
+</div>
+
+<button type="submit" class="btn btn-{{reviewType == '+' ? 'success' : 'danger'}}" >
+  Skicka {{reviewType == '+' ? ':)' : ':('}}
+</button>
+</form>

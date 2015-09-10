@@ -4,19 +4,19 @@
   	<meta charset="UTF-8">
     <title>Liu Reviews</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-		<script src="javascripts/angularApp.js"></script>
+		<script src="angularApp.js"></script>
 
 		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
 
-  <body ng-app="liuReviews">
+  <body ng-app="myApp">
   	<div class="row">
-  		<div class="col-md-6 col-md-offset-3">
+  		<div class="col-md-8 col-md-offset-2">
   			<ui-view></ui-view>
   		</div>
   	</div>
@@ -30,7 +30,7 @@
     	<div ng-repeat="course in courses | orderBy: '-satisfactionPercentage'">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px;">
-	    			{{course.code}}
+	    			{{course.code}} ({{course.year}})
 	    		</span>
 				</a>
 
@@ -43,70 +43,59 @@
     </script>
 
 
-
-    <!-- COURSES template --> 
     <script type="text/ng-template" id="/courses.html">
-    	<div class="page-header">
-    		<h2>{{course.code}} ({{course.year}})</h2>
-    		<h4>{{course.title}}, {{course.prof}} </h4>
-    		<span style="color: #2c2; font-size: 20px">☺ {{satisfactionPercentage()}}%</span> &nbsp;&nbsp;&nbsp;
-    		<span style="color: #c22; font-size: 20px">☹ {{100 - satisfactionPercentage()}}%</span>
-    	</div>
-
-      <div ng-repeat="exam in exams">
-        {{exam.examType}}
+      <div class="page-header">
+        <h2>{{course.code}} ({{course.year}})</h2>
+        <h4>{{course.title}}, {{course.prof}} </h4>
+        <span style="color: #2c2; font-size: 20px">☺ {{satisfactionPercentage()}}%</span> &nbsp;&nbsp;&nbsp;
+        <span style="color: #c22; font-size: 20px">☹ {{100 - satisfactionPercentage()}}%</span>
       </div>
-      <svg class="chart"></div>
 
-    	<div ng-repeat="review in course.reviews | orderBy: '-upvotes'" 
-    		style="font-size: 13px;">
 
-    		<!--// REVIEW TEMPLATE  -->
-  			<span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
-  			</span>
-  		
-    		<span style="margin-right: 30px;">
-    			{{review.upvotes}} 
-  			</span>
+      <div>
 
-  			<span style="color: #{{review.positive ? '2c2' : 'c22'}};">
-    				<span style="font-size: 20px;">{{review.positive ? '☺' : '☹'}}</span> 
-    		</span>
-    		{{review.body}}
-    	</div>
+        <d3-bars exams="course.exams">
+        
+      </div>
 
-    	<br>
-    	<br>
+      <!--//<div d3-bars bar-height="20" bar-padding="5"></div>-->
 
-    	<!--// REVIEW FORM  -->
-			<div class="btn-group">
-				<label class="btn btn-success">
-					<input type="radio" class="ng-hide" ng-model="reviewType" value="+">
-						Lägg till något som är bra
-					</input>
-				</label>
-        <label class="btn btn-danger">
-        	<input type="radio" class="ng-hide" ng-model="reviewType" value="-">
-        		Lägg till något som kan bli bättre
-        	</input>
-        </label>
-    	</div>
+      <div ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" 
+        style="font-size: 13px;">
 
-		  <form ng-hide="reviewType === undefined" ng-submit="addReview()" style="margin-top:30px;">
-				<div class="form-group">
-					<input type="text"
-						class="form-control"
-						placeholder="{{reviewType == '+' ? 'Skriv något som är bra' : 'Skriv något som kan bli bättre, och ge gärna förslag på hur'}}" 
-						ng-model="body">
-					</input>
-				</div>
+        <!--// REVIEW TEMPLATE  -->
+        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
+        </span>
+      
+        <span style="margin-right: 30px;">
+          {{review.upvotes}} 
+        </span>
 
-				<button type="submit" class="btn btn-{{reviewType == '+' ? 'success' : 'danger'}}" >
-					Skicka {{reviewType == '+' ? ':)' : ':('}}
-				</button>
+        <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
+            <span style="font-size: 20px;">{{review.positive ? '☺' : '☹'}}</span> 
+        </span>
 
-			</form>
+        {{review.body}}
+
+      </div>
+
+      <br><br>
+
+      <div my-review-form></div>
+
+      
+      
 
     </script>
+   
+
+    
+    <script src="js/controllers/mainController.js"></script>
+    <script src="js/controllers/courseController.js"></script>
+    <script src="js/factories/courses.js"></script>
+    <script src="js/factories/d3.js"></script>
+    <script src="js/directives/myReviewForm.js"></script>
+    <script src="js/directives/d3-bars.js"></script>
+
   </body>
 </html>

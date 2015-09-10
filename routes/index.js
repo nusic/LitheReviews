@@ -1,13 +1,12 @@
+
 var express = require('express');
 var router = express.Router();
 
-var liu = require('../lib/liu_exam_results');
-
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+var liu = require('../lib/liu_exam_results');
 
 /* REST routes */
 
@@ -28,10 +27,13 @@ router.get('/courses', function(req, res, next){
 
 router.post('/courses', function(req, res, next){
 	var course = new Course(req.query);
-	course.save(function(err, post){
-		if(err)
-			return next(err);
-		res.json(post);
+	liu.search(course, function (err, exams){
+		if(err) return next(err);
+		course.exams = exams;
+		course.save(function(err, post){
+			if(err) return next(err);
+			res.json(post);
+		});
 	});
 });
 
@@ -49,20 +51,16 @@ router.param('course', function(req, res, next, id){
 });
 
 router.get('/courses/:course', function(req, res, next){
+	liu.search(req.course, function (err, exams){
+		if(err) return next(err);
+		console.log(exams);
+	});
 	req.course.populate('reviews', function(err, course){
 		if(err) return next(err);
 
 		res.json(req.course);
 	});
 });
-
-router.get('/courses/:course/examstats', function(req, res){
-	liu.search(req.course, function (err, result){
-		if(err) return next(err);
-		
-		res.json(result);
-	});
-})
 
 router.post('/courses/:course/reviews', function(req, res, next){
 

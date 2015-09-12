@@ -20,6 +20,20 @@ var courses = [
 		year: 2015,
 		prof: "Ola Leifler",
 		reviews: []
+	},
+	{
+		code: "TNA001",
+		title: "Matematisk Grundkurs",
+		year: 2015,
+		prof: "Sixten Nilsson",
+		reviews: []
+	},
+	{
+		code: "TNA001",
+		title: "Matematisk Grundkurs",
+		year: 2014,
+		prof: "Sixten Nilsson",
+		reviews: []
 	}
 ];
 db.courses.insert(courses);

@@ -47,21 +47,25 @@
       <div class="page-header">
         <h2>{{course.code}} ({{course.year}})</h2>
         <h4>{{course.title}}, {{course.prof}} </h4>
-        <span style="color: #2c2; font-size: 20px">☺ {{satisfactionPercentage()}}%</span> &nbsp;&nbsp;&nbsp;
-        <span style="color: #c22; font-size: 20px">☹ {{100 - satisfactionPercentage()}}%</span>
+        <div ng-show="{{satisfactionPercentage()}}"> 
+        <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
+          ☺ {{satisfactionPercentage()}}%
+          </span>
+          
+          <span style="color: #c22; font-size: 20px">
+          ☹ {{100 - satisfactionPercentage()}}%
+          </span>
+        </div>
       </div>
 
 
-      <div>
-
-        <d3-bars exams="course.exams">
-        
+      <div ng-repeat="exam in course.exams" class="chart">
+        <d3-bars exam="exam">        
       </div>
 
-      <!--//<div d3-bars bar-height="20" bar-padding="5"></div>-->
 
       <div ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" 
-        style="font-size: 13px;">
+        style="font-size: 13px; clear: both;">
 
         <!--// REVIEW TEMPLATE  -->
         <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
@@ -82,9 +86,6 @@
       <br><br>
 
       <div my-review-form></div>
-
-      
-      
 
     </script>
    

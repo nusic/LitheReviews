@@ -26,8 +26,10 @@ function ($stateProvider, $urlRouterProvider) {
         return courses.get($stateParams.id);
       }]
     }
-  });
+  })
 
+  .state('/login', {});
+  
   $urlRouterProvider.otherwise('/');
 }]);
 

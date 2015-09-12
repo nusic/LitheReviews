@@ -3,86 +3,71 @@ angular.module('myApp')
 
 		// Link function to be returned
 		function link(scope, element, attrs){
-
-			console.log('scope.exams:');
-			console.log(scope.exams);
-
 			d3Service.d3().then(function (d3){
 				//d3 is the raw d3 object
-				var margin = parseInt(attrs.margin) || 20,
-						barHeight = parseInt(attrs.barHeight) || 20,
-						barPadding = parseInt(attrs.barPadding) || 5;
+
+				var title = scope.exam.examType;
+	  		var data = scope.exam.stats;
+
+				var margin = {top: 40, right: 45, bottom: 40, left:0};
+			  var width = 150;
+			  var height= 150;
+
+			  var y = d3.scale.linear()
+		      .range([height, 0]);
+
+			  var x = d3.scale.ordinal()
+			    .rangeRoundBands([0, width]);
 
 				var svg = d3.select(element[0])
 					.append('svg')
-					.style('width', '100%');
+					.attr('width', width + margin.left + margin.right)
+					.attr('height', height + margin.bottom + margin.top);
+				
+				x.domain(data.map(function(d){ return d.grade; }));
+			  y.domain([0, d3.max(data, function(d){ return d.freq; })]);
 
-				// Browser onresize event
-				window.onresize = function() {
-				  scope.$apply();
-				};
-			
+			  var barWidth = width / 5;
 
-				// hard-code data
-				scope.data = [
-				  {name: "Greg", score: 98},
-				  {name: "Ari", score: 96},
-				  {name: 'Q', score: 75},
-				  {name: "Loser", score: 48}
-				];
+				var bar = svg.selectAll('g')
+					.data(data)
+					.enter().append('g')
+					.attr('transform', function(d,i) {
+						return 'translate(' + (margin.left + i*barWidth) + ',0)';
+					});
 
-				// Watch for resize event
-				scope.$watch(function() {
-				  return angular.element($window)[0].innerWidth;
-				}, function() {
-				  scope.render(scope.data);
-				});
+				bar.append('rect')
+					.attr('y', function (d) { return margin.top + y(d.freq); })
+					.attr('height', function (d) { return height - y(d.freq); })
+					.attr('width', barWidth - 1);
 
-				scope.render = function(data) {
-			    // remove all previous items before render
-			    svg.selectAll('*').remove();
+			  svg.append("text")
+					.attr("class", "title")
+					.attr("x", (width + margin.left)/2)
+					.attr("y", 20)
+					.text(title);
 
-			    // If we don't pass any data, return out of the element
-			    if (!data) return;
+			  bar.append('text')
+					.attr('x', barWidth / 2)
+					.attr('y', function (d) { return margin.top + y(d.freq) + 3; })
+					.attr('dy', '.75em')
+					.attr('class', 'bar_label')
+					.text(function (d) { return d.freq; });
 
-			    // setup variables
-			    var width = d3.select(element[0]).node().offsetWidth - margin;
+			  bar.append('text')
+					.attr('x', barWidth / 2)
+					.attr('y', function (d) { return margin.top + height + 5; })
+					.attr('dy', '.75em')
+					.attr('class', 'x_label')
+					.text(function (d) { return d.grade; });
 
-			    // calculate the height
-			    var height = scope.data.length * (barHeight + barPadding);
-			    
-			    // Use the category20() scale function for multicolor support
-			    var color = d3.scale.category20();
 
-			    // our xScale
-			    var xScale = d3.scale.linear()
-						.domain([0, d3.max(data, function(d) { return d.score; })])
-			      .range([0, width]);
-
-			    // set the height based on the calculations above
-			    svg.attr('height', height);
-
-			    //create the rectangles for the bar chart
-			    svg.selectAll('rect')
-			      .data(data).enter()
-			        .append('rect')
-			        .attr('height', barHeight)
-			        .attr('width', 140)
-			        .attr('x', Math.round(margin/2))
-			        .attr('y', function(d,i) {
-			          return i * (barHeight + barPadding);
-			        })
-			        .attr('fill', function(d) { return color(d.score); })
-			        .transition()
-			          .duration(1000)
-			          .attr('width', function(d) {return xScale(d.score); });
-				}
 			})};
 
 		return {
 			restrict: 'EA',
 			scope: {
-				exams: '=',
+				exam: '=',
 			},
 			link: link
 		};

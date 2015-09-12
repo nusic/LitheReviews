@@ -1,39 +1,50 @@
-
 var express = require('express');
 var router = express.Router();
 
+var cas_login = require('./cas_auth');
+var liu = require('../lib/liu_exam_results');
+
+// Home
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-var liu = require('../lib/liu_exam_results');
+// CAS
 
-/* REST routes */
+router.get('/login', function(req, res, next){
+	console.log(' at /login');
+	cas_login.cas_login(req, res, next);
+});
 
+router.get('/login_validation', function(req, res, next){
+	console.log(' at /login_validation');
+	cas_login.cas_login(req, res, next);
+});
+
+
+/* REST routes */ 
 var mongoose = require('mongoose');
 var Course = mongoose.model('Course');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 
 
-
 router.get('/courses', function(req, res, next){
-	Course.find(function(err, posts){
-		if(err) 
+	Course.find(function(err, courses){
+		if(err){
+			console.log("Err: " + err);
 			return next(err);
-		res.json(posts);
+		}
+		res.json(courses);
 	});
 });
 
 router.post('/courses', function(req, res, next){
 	var course = new Course(req.query);
-	liu.search(course, function (err, exams){
+
+	course.save(function(err, course){
 		if(err) return next(err);
-		course.exams = exams;
-		course.save(function(err, post){
-			if(err) return next(err);
-			res.json(post);
-		});
+		res.json(course);
 	});
 });
 
@@ -51,15 +62,22 @@ router.param('course', function(req, res, next, id){
 });
 
 router.get('/courses/:course', function(req, res, next){
-	liu.search(req.course, function (err, exams){
-		if(err) return next(err);
-		console.log(exams);
-	});
-	req.course.populate('reviews', function(err, course){
-		if(err) return next(err);
+	if(req.course.exams){
+		liu.search(req.course, function (err, exams){
+			if(err) return next(err);
+			console.log(exams);
+			req.course.exams = exams;
+			req.course.save(function (err, course){
+				if(err) return next(err);
 
-		res.json(req.course);
-	});
+				req.course.populate('reviews', function(err, course){
+					if(err) return next(err);
+
+					res.json(req.course);
+				});
+			});
+		});
+	}
 });
 
 router.post('/courses/:course/reviews', function(req, res, next){
@@ -102,7 +120,6 @@ router.get('/reviews/:review', function (req, res){
 router.put('/courses/:course/reviews/:review/upvote', function (req, res, next){
 	req.review.upvote(function (err, review){
 		if(err) return next(err);
-		console.log("updating satisfaction");
 		req.course.updateSatisfaction(function (err){
 			if(err) return next(err);
 			res.json(req.review);

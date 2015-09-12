@@ -1,7 +1,7 @@
 <div class="btn-group">
 <label class="btn btn-success">
   <input type="radio" class="ng-hide" ng-model="reviewType" value="+">
-    Lägg till något som är bra
+    Lägg till något som du gillade
   </input>
 </label>
 <label class="btn btn-danger">
@@ -15,7 +15,7 @@
 <div class="form-group">
   <input type="text"
     class="form-control"
-    placeholder="{{reviewType == '+' ? 'Skriv något som är bra' : 'Skriv något som kan bli bättre, och ge gärna förslag på hur'}}" 
+    placeholder="{{reviewType == '+' ? 'Skriv något som du gillade' : 'Skriv något som kan bli bättre'}}" 
     ng-model="body">
   </input>
 </div>

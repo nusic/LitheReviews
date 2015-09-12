@@ -25,7 +25,6 @@ function ($document, $q, $rootScope){
 	var s = $document[0].getElementsByTagName('body')[0];
 	s.appendChild(scriptTag);
 
-	console.log("Returning a function");
 	return {
 	  d3: function() { return d.promise; }
 	};

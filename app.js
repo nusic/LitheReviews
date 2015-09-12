@@ -29,12 +29,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// Cookie parser
+var cookieParser = require('cookie-parser')
+app.use(cookieParser());
+
+// CAS
+var cas_auth = require('./routes/cas_auth.js');
+app.use('/', cas_auth.myValidate);
+
 app.use('/', routes);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Not Found: ' + req.url + " method: " + req.method);
   err.status = 404;
   next(err);
 });

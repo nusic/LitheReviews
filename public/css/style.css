@@ -13,8 +13,11 @@ a {
 
 
 /* D3 styles */
+.chart {
+	float: left;
+}
 .chart rect {
-  fill: #c22;
+  fill: rgb(225, 77, 76);
 }
 
 .chart text{
@@ -23,16 +26,17 @@ a {
 
 .chart .title {
 	fill: black;
-	font: 15px sans-serif;
+	font-family: sans-serif;
 	font-weight: bold;
+	font-size: 10px;
 }
 
-.chart text.bar_label {
+.chart .bar_label {
   fill: white;
   font: 10px sans-serif;
 }
 
-.chart text.x_label {
+.chart .x_label {
 	font: 10px sans-serif;
 	color: black;
 }

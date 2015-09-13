@@ -16,11 +16,6 @@ router.get('/login', function(req, res, next){
 	cas_login.cas_login(req, res, next);
 });
 
-router.get('/login_validation', function(req, res, next){
-	console.log(' at /login_validation');
-	cas_login.cas_login(req, res, next);
-});
-
 
 /* REST routes */ 
 var mongoose = require('mongoose');

@@ -7,22 +7,25 @@ function repl(code){
 
 
 /* TEST CASE - executing code through repl*/ 
-var tm = new TicketMap(1000);
+var tm = new TicketMap({
+	lifeTimeInMillis: 1000,
+	verbose: true
+});
 
-repl("tm.set('some_ticket', 'some_liu_id');");
-repl("tm.has('some_ticket');");
-repl("tm.getLiuId('some_ticket');");
+console.log('->', tm.set('some_ticket', 'some_liu_id'));
+console.log('->', tm.has('some_ticket'));
+console.log('->', tm.getLiuId('some_ticket'));
 
 setTimeout(function(){
-	repl("tm.extendLifeTime('some_ticket');");
+	console.log('->', tm.extendLifeTime('some_ticket'));
 }, 900);
 
 setTimeout(function(){
-	repl("tm.has('some_ticket');");
+	console.log('->', tm.has('some_ticket'));
 }, 1500);
 
 setTimeout(function(){
-	repl("tm.has('some_ticket');");
+	console.log('->', tm.has('some_ticket'));
 }, 2500);
 
 

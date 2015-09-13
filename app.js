@@ -25,6 +25,8 @@ var cas_auth = require('./routes/cas_auth.js');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -34,20 +36,13 @@ app.use(cookieParser());
 app.use(session({ 
   secret: 'keyboard cat yes', 
   rolling: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 60*60*1000 }
 }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.use('/', function(req, res, next){
-  console.log("Current time:", Date.now());
-  console.log("Cookie expire:", req.session.cookie.expires);
-  next();
-})
 
 // CAS
 app.use('/', cas_auth.myValidate);

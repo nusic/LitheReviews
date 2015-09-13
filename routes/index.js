@@ -12,7 +12,6 @@ router.get('/', function(req, res, next) {
 // CAS
 
 router.get('/login', function(req, res, next){
-	console.log(' at /login');
 	cas_login.cas_login(req, res, next);
 });
 

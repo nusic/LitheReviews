@@ -27,11 +27,12 @@
     		<h1>Liu Course Reviews</h1>
     	</div>
 
-    	<div ng-repeat="course in courses | orderBy: '-satisfactionPercentage'">
+    	<div ng-repeat="course in courses | orderBy: '-year +code'">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px;">
 	    			{{course.code}} ({{course.year}})
 	    		</span>
+          
 				</a>
 
     		<p class="text-right" style="margin-top: -25px;font-size:17px;">
@@ -63,29 +64,31 @@
         <d3-bars exam="exam">        
       </div>
 
+      <div style="clear: both;">
+        <hr>
+        <div ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" 
+          style="font-size: 13px; ">
 
-      <div ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" 
-        style="font-size: 13px; clear: both;">
+          <!--// REVIEW TEMPLATE  -->
+          <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
+          </span>
+        
+          <span style="margin-right: 30px;">
+            {{review.upvotes}} 
+          </span>
 
-        <!--// REVIEW TEMPLATE  -->
-        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
-        </span>
-      
-        <span style="margin-right: 30px;">
-          {{review.upvotes}} 
-        </span>
+          <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
+              <span style="font-size: 20px;">{{review.positive ? '☺' : '☹'}}</span> 
+          </span>
 
-        <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
-            <span style="font-size: 20px;">{{review.positive ? '☺' : '☹'}}</span> 
-        </span>
+          {{review.body}}
 
-        {{review.body}}
+        </div>
 
+        <br><br>
+
+        <div my-review-form></div>
       </div>
-
-      <br><br>
-
-      <div my-review-form></div>
 
     </script>
    

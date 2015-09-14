@@ -6,6 +6,7 @@ var CourseSchema = new mongoose.Schema({
 	year: Number,
 	prof: String,
 	satisfactionPercentage: Number,
+	period: String,
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 });
@@ -26,5 +27,7 @@ CourseSchema.methods.updateSatisfaction = function(callback){
 		course.save(callback);
 	});
 }
+
+
 
 mongoose.model('Course', CourseSchema);

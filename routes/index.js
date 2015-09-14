@@ -36,6 +36,7 @@ router.get('/courses', function(req, res, next){
 router.post('/courses', function(req, res, next){
 	var course = new Course(req.query);
 
+
 	course.save(function(err, course){
 		if(err) return next(err);
 		res.json(course);

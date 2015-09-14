@@ -1,0 +1,184 @@
+[
+  {
+    "code": "TDDB84",
+    "title": "Design Patterns",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Ola Leifler"
+  },
+  {
+    "code": "TDDC78",
+    "title": "Programming of Parallel Computers - Methods and Tools",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Christoph W. Kessler"
+  },
+  {
+    "code": "TDDD27",
+    "title": "Advanced Web Programming",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Erik Berglund"
+  },
+  {
+    "code": "TDDD56",
+    "title": "Multicore and GPU Programming",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Christoph W. Kessler"
+  },
+  {
+    "code": "TGTU81",
+    "title": "Information Retrieval",
+    "hp": "2",
+    "year": 2014,
+    "prof": ""
+  },
+  {
+    "code": "TNCG13",
+    "title": "SFX - Tricks of the Trade",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Jonas Unger"
+  },
+  {
+    "code": "TNCG14",
+    "title": "Advanced Computer Graphics Programming",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Matthew Cooper"
+  },
+  {
+    "code": "TNCG15",
+    "title": "Advanced Global Illumination and Rendering",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Mark E Dieckmann"
+  },
+  {
+    "code": "TND012",
+    "title": "Programming",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Aida Nordman"
+  },
+  {
+    "code": "TNG022",
+    "title": "Modelling and Simulation",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Anna Lombardi"
+  },
+  {
+    "code": "TNG028",
+    "title": "Automatic Control",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Anna Lombardi"
+  },
+  {
+    "code": "TNG033",
+    "title": "Programming in C++",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Aida Nordman"
+  },
+  {
+    "code": "TNM031",
+    "title": "Network Programming and Security",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Pierangelo Dell´Acqua"
+  },
+  {
+    "code": "TNM034",
+    "title": "Advanced Image Processing",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Daniel Nyström"
+  },
+  {
+    "code": "TNM046",
+    "title": "Computer Graphics",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Sasan Gooran"
+  },
+  {
+    "code": "TNM048",
+    "title": "Information Visualisation",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Jimmy Johansson"
+  },
+  {
+    "code": "TNM067",
+    "title": "Scientific Visualization",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Timo Ropinski"
+  },
+  {
+    "code": "TNM079",
+    "title": "Modelling and Animation",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Mark E Dieckmann"
+  },
+  {
+    "code": "TNM085",
+    "title": "Modelling Project",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Anna Lombardi"
+  },
+  {
+    "code": "TNM086",
+    "title": "Virtual Reality Techniques",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Karljohan Lundin Palmerius"
+  },
+  {
+    "code": "TNM087",
+    "title": "Image Processing and Analysis",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Reiner Lenz"
+  },
+  {
+    "code": "TNM091",
+    "title": "Media Production for Immersive Environments",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Matthew Cooper"
+  },
+  {
+    "code": "TNM093",
+    "title": "Practical Data Visualization and Virtual Reality",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Jimmy Johansson"
+  },
+  {
+    "code": "TNM095",
+    "title": "Artificial Intelligence for Interactive Media",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Pierangelo Dell'Acqua"
+  },
+  {
+    "code": "TNM096",
+    "title": "Artificial Intelligence - Principles and Techniques",
+    "hp": "6",
+    "year": 2014,
+    "prof": ""
+  },
+  {
+    "code": "TSBB09",
+    "title": "Image Sensors",
+    "hp": "6",
+    "year": 2014,
+    "prof": "Klas Nordberg"
+  }
+]

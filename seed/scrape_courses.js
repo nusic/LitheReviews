@@ -3,25 +3,27 @@ var fs = require('fs');
 var liu_courses = require('../lib/liu_courses.js');
 var liu_course_info = require('../lib/liu_course_info.js');
 
-var programme = 'MT';
-var year = 2014;
 
-var outputFile = 'courses_'+programme+'_'+year+'.json';
+var query = {
+	programme: 'MT',
+	year: 2015,
+}
 
-console.log('Scraping courses of: ' + programme);
+var outputFile = 'courses_'+query.programme+'_'+query.year+'.json';
+
+console.log('Scraping courses of: ' + query.programme);
 
 var courseArray = [];
 var numCourses = -1;
 var numCourseInfoScraped = 0;
 
-liu_courses.search(programme, function (err, courses){
+liu_courses.search(query, function (err, courses){
 	if(err) return console.error(err);
 
 	numCourses = courses.length;
 	console.log("Found " + numCourses + " courses. Scraping course info ..");
 
 	courses.forEach(function(course, i){
-		course.year = year;
 
 		(function (courseIndex){
 			liu_course_info.search(course, function (err, course){
@@ -30,7 +32,7 @@ liu_courses.search(programme, function (err, courses){
 				courseArray[courseIndex] = course;
 				numCourseInfoScraped++;
 
-				console.log(numCourseInfoScraped + '/' + numCourses + ' : ' + course.code + " - " + course.title);
+				console.log(numCourseInfoScraped + '/' + numCourses + ': ' + course.code + " - " + course.title);
 
 				if(numCourseInfoScraped === numCourses){
 					onDone();

@@ -7,6 +7,9 @@ var CourseSchema = new mongoose.Schema({
 	prof: String,
 	satisfactionPercentage: Number,
 	period: String,
+	block: String,
+	hp: Number,
+	courseSite: String,
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 });

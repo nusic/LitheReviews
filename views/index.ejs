@@ -27,15 +27,17 @@
     		<h1>Liu Course Reviews</h1>
     	</div>
 
-    	<div ng-repeat="course in courses | orderBy: '-year +code'">
+    	<div ng-repeat="course in courses | orderBy: '-year +code'" style="padding: 5px; margin-bottom: 10px;">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px;">
 	    			{{course.code}} ({{course.year}})
 	    		</span>
-          
+          <p style="font-size:15px; margin-left:10px;">
+            {{course.title}}
+          </p>
 				</a>
 
-    		<p class="text-right" style="margin-top: -25px;font-size:17px;">
+    		<p class="text-right" style="margin-top: -40px;font-size:17px;" ng-show="{{course.satisfactionPercentage}}">
 	    		<span style="color: #2c2; font-size: 20px">
             ☺ {{course.satisfactionPercentage}}%
           </span>
@@ -46,10 +48,10 @@
 
     <script type="text/ng-template" id="/courses.html">
       <div class="page-header">
-        <h2>{{course.code}} ({{course.year}})</h2>
-        <h4>{{course.title}}, {{course.prof}} </h4>
-        <div ng-show="{{satisfactionPercentage()}}"> 
-        <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
+        <h2>{{course.code}}</h2>
+        <h4>{{course.title}}</h4>
+        <div ng-show="{{course.satisfactionPercentage}}"> 
+          <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
           ☺ {{satisfactionPercentage()}}%
           </span>
           
@@ -60,9 +62,13 @@
       </div>
 
 
+
       <div ng-repeat="exam in course.exams" class="chart">
         <d3-bars exam="exam">        
       </div>
+      <p ng-hide="course.exams.length">
+        Ingen statistik
+      </p>
 
       <div style="clear: both;">
         <hr>
@@ -70,15 +76,15 @@
           style="font-size: 13px; ">
 
           <!--// REVIEW TEMPLATE  -->
-          <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(review)">
-          </span>
-        
           <span style="margin-right: 30px;">
-            {{review.upvotes}} 
-          </span>
-
-          <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
-              <span style="font-size: 20px;">{{review.positive ? '☺' : '☹'}}</span> 
+          
+            <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
+              <span style="font-size: 20px;">
+                {{review.positive ? '☺' : '☹'}}
+              </span> 
+            </span>
+            {{review.upvotes}}
+            <a ng-click="incrementUpvotes(review)">+1</a>
           </span>
 
           {{review.body}}

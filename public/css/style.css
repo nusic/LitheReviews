@@ -7,17 +7,25 @@ a {
   color: #00B7FF;
 }
 
+a:hover{
+	cursor: pointer;
+}
+
 .clickable:hover {
 	cursor: pointer;
 }
 
 
-/* D3 styles */
+/* 
+	D3 styles 
+*/
 .chart {
 	float: left;
 }
 .chart rect {
-  fill: rgb(225, 77, 76);
+  /*fill: rgb(215, 77, 76);*/
+  fill: rgb(161, 215, 225);
+
 }
 
 .chart text{
@@ -27,8 +35,10 @@ a {
 .chart .title {
 	fill: black;
 	font-family: sans-serif;
-	font-weight: bold;
-	font-size: 10px;
+	font-size: 0.75em;
+	width: 190px;
+	margin-right: 10px;
+	height: 20px;
 }
 
 .chart .bar_label {

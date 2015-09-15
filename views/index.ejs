@@ -48,7 +48,7 @@
 
     <script type="text/ng-template" id="/courses.html">
       <div class="page-header">
-        <h2>{{course.code}}</h2>
+        <h2>{{course.code}} ({{course.year}})</h2>
         <h4>{{course.title}}</h4>
         <div ng-show="{{course.satisfactionPercentage}}"> 
           <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
@@ -72,24 +72,25 @@
 
       <div style="clear: both;">
         <hr>
-        <div ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" 
-          style="font-size: 13px; ">
 
-          <!--// REVIEW TEMPLATE  -->
-          <span style="margin-right: 30px;">
-          
+        <!-- COMMENT SECTION -->
+        <table id="comment-section">
+          <tr ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" class="comment">
+          <td style="width: 80px;">
             <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
               <span style="font-size: 20px;">
                 {{review.positive ? '☺' : '☹'}}
-              </span> 
+              </span>
             </span>
-            {{review.upvotes}}
+            <span>{{review.upvotes}}</span>
             <a ng-click="incrementUpvotes(review)">+1</a>
-          </span>
-
-          {{review.body}}
-
-        </div>
+          </td>
+          <td>
+            <p>
+            {{review.body}}
+            </p>
+          </td>
+        </table>
 
         <br><br>
 

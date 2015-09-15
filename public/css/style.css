@@ -16,6 +16,20 @@ a:hover{
 }
 
 
+/*
+	COMMENT
+*/
+.comment {
+	font-size: 13px;
+}
+
+.comment p{
+	margin-top: 13px;
+}
+
+
+
+
 /* 
 	D3 styles 
 */

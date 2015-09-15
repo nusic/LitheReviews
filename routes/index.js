@@ -9,20 +9,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-// CAS
-
+// CAS login
 router.get('/login', function(req, res, next){
 	cas_login.cas_login(req, res, next);
 });
 
 
-/* REST routes */ 
+
 var mongoose = require('mongoose');
 var Course = mongoose.model('Course');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 
-
+/* REST routes */ 
 router.get('/courses', function(req, res, next){
 	Course.find(function(err, courses){
 		if(err){
@@ -36,20 +35,48 @@ router.get('/courses', function(req, res, next){
 router.post('/courses', function(req, res, next){
 	var course = new Course(req.query);
 
-
 	course.save(function(err, course){
 		if(err) return next(err);
 		res.json(course);
 	});
 });
 
+router.param('courseCode', function (req, res, next, code) {
+	console.log('middleware: courseCode');
+	req.course = {
+		code: code
+	};
+	return next();
+});
+
+router.param('courseYear', function (req, res, next, year) {
+	console.log('middleware: courseYear');
+	req.course.year = year;
+	return next();
+});
+
+router.get('/:courseCode/:courseYear', function (req, res, next) {
+	console.log('Getting my nice route');
+	var query = Course.find(req.course);
+	query.exec(function (err, result) {
+		if(err)	return next(err);
+		if(!result) return next(new Error('Cannot find course!'));
+
+		var course = result[0];
+		course.populate('reviews', function(err, course){
+			if(err) return next(err);
+
+			res.json(course);
+		});
+	});
+});
 
 // Preloading post objects
 router.param('course', function(req, res, next, id){
 	var query = Course.findById(id);
 	query.exec(function(err, course){
 		if(err) return next(err);
-		if(!course) return next(new Error('Cannot find post!'));
+		if(!course) return next(new Error('Cannot find course!'));
 
 		req.course = course;
 		return next();
@@ -76,7 +103,6 @@ router.get('/courses/:course', function(req, res, next){
 });
 
 router.post('/courses/:course/reviews', function(req, res, next){
-
 	//Create new review
 	var review = new Review(req.body);
 	review.course = req.course;

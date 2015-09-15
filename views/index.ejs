@@ -28,7 +28,7 @@
     	</div>
 
     	<div ng-repeat="course in courses | orderBy: '-year +code'" style="padding: 5px; margin-bottom: 10px;">
-    		<a href="#/courses/{{course._id}}">
+    		<a href="#/{{course.code}}/{{course.year}}">
 	    		<span style="font-size:20px; margin-left:10px;">
 	    			{{course.code}} ({{course.year}})
 	    		</span>

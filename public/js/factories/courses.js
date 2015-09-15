@@ -16,6 +16,13 @@ angular.module('myApp').factory('courses', ['$http', function($http){
     });
   };
 
+  o._get = function(code, year) {
+    console.log('o._get');
+    return $http.get('/' + code + '/' + year).then(function (res) {
+      return res.data;
+    })
+  }
+
   o.getStats = function(id){
     return $http.get('/courses/' + id + '/examstats').then(function(res){
       return res.data;

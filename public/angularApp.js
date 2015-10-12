@@ -28,18 +28,6 @@ function ($stateProvider, $urlRouterProvider) {
     }
   })
 
-  .state('courses2', {
-    url: '/{code}/{year}',
-    templateUrl: '/courses.html',
-    controller: 'CourseController',
-    resolve: {
-      course: ['$stateParams', 'courses', function ($stateParams, courses){
-        console.log('resolve');
-        return courses._get($stateParams.code, $stateParams.year);
-      }]
-    }
-  })
-
   .state('/login', {});
   
   $urlRouterProvider.otherwise('/');

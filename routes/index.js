@@ -41,36 +41,6 @@ router.post('/courses', function(req, res, next){
 	});
 });
 
-router.param('courseCode', function (req, res, next, code) {
-	console.log('middleware: courseCode');
-	req.course = {
-		code: code
-	};
-	return next();
-});
-
-router.param('courseYear', function (req, res, next, year) {
-	console.log('middleware: courseYear');
-	req.course.year = year;
-	return next();
-});
-
-router.get('/:courseCode/:courseYear', function (req, res, next) {
-	console.log('Getting my nice route');
-	var query = Course.find(req.course);
-	query.exec(function (err, result) {
-		if(err)	return next(err);
-		if(!result) return next(new Error('Cannot find course!'));
-
-		var course = result[0];
-		course.populate('reviews', function(err, course){
-			if(err) return next(err);
-
-			res.json(course);
-		});
-	});
-});
-
 // Preloading post objects
 router.param('course', function(req, res, next, id){
 	var query = Course.findById(id);

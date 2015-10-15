@@ -34,7 +34,7 @@ app.use(logger('dev'));
 app.use(cookieParser());
 
 app.use(session({ 
-  secret: 'keyboard cat yes', 
+  secret: 'to be changed', 
   rolling: true,
   cookie: { maxAge: 60*60*1000 }
 }));

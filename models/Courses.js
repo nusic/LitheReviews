@@ -31,6 +31,23 @@ CourseSchema.methods.updateSatisfaction = function(callback){
 	});
 }
 
+CourseSchema.methods.markVotedComments = function(user){
+	var markedReviews = [];
+	for (var i = 0; i < this.reviews.length; i++) {
+		var voted = false;
 
+		for (var j = 0; user && j < user.upvoteReviews.length; j++) {
+			if(this.reviews[i].equals(user.upvoteReviews[j])){
+				voted = true;
+				continue;
+			}
+		};
+
+		var markedReview = this.reviews[i].toObject();
+		markedReview.voted = voted;
+		markedReviews.push(markedReview);
+	};
+	return markedReviews
+}
 
 mongoose.model('Course', CourseSchema);

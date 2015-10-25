@@ -9,11 +9,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/what', function(req, res, next){
+	res.render('about', {title: 'Express'});
+});
+
 // CAS login
 router.get('/login', function(req, res, next){
 	cas_login.cas_login(req, res, next);
 });
-
 
 
 var mongoose = require('mongoose');
@@ -44,6 +47,7 @@ router.post('/courses', function(req, res, next){
 // Preloading post objects
 router.param('course', function(req, res, next, id){
 	var query = Course.findById(id);
+
 	query.exec(function(err, course){
 		if(err) return next(err);
 		if(!course) return next(new Error('Cannot find course!'));
@@ -54,21 +58,34 @@ router.param('course', function(req, res, next, id){
 });
 
 router.get('/courses/:course', function(req, res, next){
+	function populateReviewsAndSend(req, res){
+		req.course.populate('reviews', function(err, course){
+			if(err) return next(err);
+
+			User.findOrCreate({liuId: req.session.liuId}, function(err, user){
+				if(err) return new Error(err);
+
+				var courseObject = course.toObject();
+				courseObject.reviews = course.markVotedComments(user);
+				res.json(courseObject);
+			});
+		});
+	}
+
 	if(req.course.exams){
 		liu.search(req.course, function (err, exams){
 			if(err) return next(err);
-			console.log(exams);
+
 			req.course.exams = exams;
 			req.course.save(function (err, course){
 				if(err) return next(err);
 
-				req.course.populate('reviews', function(err, course){
-					if(err) return next(err);
-
-					res.json(req.course);
-				});
+				populateReviewsAndSend(req, res);
 			});
 		});
+	}
+	else {
+		populateReviewsAndSend(req, res);
 	}
 });
 
@@ -86,7 +103,9 @@ router.post('/courses/:course/reviews', function(req, res, next){
 
 		// Save course
 		req.course.save(function(err, course){
-			if(err) return next(err);
+			if(err) {
+				return next(err);
+			}
 			res.json(review);
 		});
 	});
@@ -106,14 +125,32 @@ router.param('review', function(req, res, next, id){
 
 router.get('/reviews/:review', function (req, res){
 	res.json(req.review);
-})
+});
 
 router.put('/courses/:course/reviews/:review/upvote', function (req, res, next){
-	req.review.upvote(function (err, review){
+
+	//Find or create user
+	User.findOrCreate({liuId: req.session.liuId}, function(err, user){
 		if(err) return next(err);
-		req.course.updateSatisfaction(function (err){
-			if(err) return next(err);
-			res.json(req.review);
+
+		//Add vote to user
+		user.upvote(req.review, function(err, user){
+			if(err) {
+				console.log(err);
+				if(err === 'Already voted') return res.json(req.review);
+				else return next(err);
+			}
+
+			//Increment vote son review
+			req.review.upvote(function (err, review){
+				if(err) return next(err);
+
+				//Recalculate update satisfaction percentage
+				req.course.updateSatisfaction(function (err){
+					if(err) return next(err);
+					res.json(req.review);
+				});
+			});
 		});
 	});
 });

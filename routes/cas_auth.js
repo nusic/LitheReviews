@@ -14,7 +14,9 @@ for (var k in interfaces) {
 }
 
 var myIp = addresses[0];
-console.log('Local ip-address:', myIp)
+console.log('Local ip-address:', myIp);
+
+
 
 var CAS = require('cas');
 var cas = new CAS({
@@ -24,8 +26,9 @@ var cas = new CAS({
 
 // Used as middleware on all routes
 exports.myValidate = function(req, res, next){
-  //console.log("dev mode: letting all requests through");
-  //return next();
+  if(req.url.substring(0, 6) === '/login'){
+    return next();
+  }
 
   var liuTicket = req.session.liuTicket;
   var liuId = req.session.liuId;
@@ -33,9 +36,9 @@ exports.myValidate = function(req, res, next){
   console.log('liuId:', liuId, ' liuTicket:', liuTicket);
 
   // Allow next handler if liuId and liuTicket is provided
-  // in the cookie, or if the /login endpoint is requested
-  if((liuTicket && liuId) || req.url.substring(0, 6) === '/login'){
-    return next();
+  // in the cookie
+  if(liuTicket && liuId){
+    next();
   }
   else {
     return res.redirect('/login');    

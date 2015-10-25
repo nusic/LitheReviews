@@ -28,8 +28,8 @@ angular.module('myApp').factory('courses', ['$http', function($http){
 
   o.upvote = function(course, review){
     return $http.put('/courses/' + course._id + '/reviews/' + review._id + '/upvote')
-      .success(function(data){
-        review.upvotes += 1;
+      .success(function(rev){
+        review.upvotes = rev.upvotes;
       })
       .catch(function (err){
         console.log(err);

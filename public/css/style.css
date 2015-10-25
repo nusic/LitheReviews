@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -9,10 +9,23 @@ a {
 
 a:hover{
 	cursor: pointer;
+	text-decoration: none;
+}
+
+h3{
+	margin-top: 0px;
+}
+
+h1{
+	margin-bottom: 0px;
 }
 
 .clickable:hover {
 	cursor: pointer;
+}
+
+.spy-img{
+	margin-top: -29px;
 }
 
 
@@ -27,6 +40,9 @@ a:hover{
 	margin-top: 13px;
 }
 
+small{
+	color: lightgray;
+}
 
 
 

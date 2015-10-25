@@ -1,7 +1,7 @@
 <div class="btn-group">
 <label class="btn btn-success">
   <input type="radio" class="ng-hide" ng-model="reviewType" value="+">
-    Lägg till något som du gillade
+    &nbsp;&nbsp;Lägg till något som du gillade&nbsp;&nbsp;&nbsp;
   </input>
 </label>
 <label class="btn btn-danger">
@@ -15,9 +15,11 @@
 <div class="form-group">
   <input type="text"
     class="form-control"
-    placeholder="{{reviewType == '+' ? 'Skriv något som du gillade' : 'Skriv något som kan bli bättre'}}" 
-    ng-model="body">
+    placeholder="Skriv en sak som {{reviewType == '+' ? 'var bra' : 'kan bli bättre'}}" 
+    ng-model="body"
+    maxlength="150">
   </input>
+  <small class="commentLength">{{body ? body.length : 0}} / 150 tecken</small>
 </div>
 
 <button type="submit" class="btn btn-{{reviewType == '+' ? 'success' : 'danger'}}" >

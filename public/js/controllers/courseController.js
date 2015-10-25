@@ -12,6 +12,7 @@ angular.module('myApp').controller('CourseController', [
         body: $scope.body,
         positive: $scope.reviewType == '+',
       }).success(function(review){
+        review.voted = false;
         $scope.course.reviews.push(review);
       });
 
@@ -20,7 +21,9 @@ angular.module('myApp').controller('CourseController', [
     };
 
     $scope.incrementUpvotes = function(review){
+      review.upvotes++;
       courses.upvote(course, review);
+      review.voted = true;
     };
 
     $scope.satisfactionPercentage = function(){

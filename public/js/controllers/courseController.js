@@ -64,18 +64,14 @@ angular.module('myApp').animation('.comment', function(){
   return {
     move: function(element, done){
       //find new position of element
-      var diff = -1;
-
       var $eles = $('tr[ng-repeat]');
-      for (var i = 0; i < $eles.length; i++) {
-        if($eles[i].innerHTML === element[0].innerHTML){
-          diff = +$eles[i].id - i;
-          break;
-        }
-      };
-      
-      if(diff > 0){
-        element.css('top', diff*40 + 'px');
+      var oldIndex = +element[0].id;
+      var replacedEle = $eles[oldIndex];
+      var yPixelDiff = replacedEle.getBoundingClientRect().top 
+                      - element[0].getBoundingClientRect().top;
+
+      if(yPixelDiff > 0){
+        element.css('top', yPixelDiff + 'px');
         $(element).animate({
           top: "0px"
         }, done);

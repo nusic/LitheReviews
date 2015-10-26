@@ -8,6 +8,7 @@ angular.module('myApp').controller('CourseController', [
 
     $scope.goToInput = function(){
       window.scrollBy(0, 200);
+      $(commentInputField).focus();
     }
 
     $scope.addReview = function(){
@@ -28,7 +29,8 @@ angular.module('myApp').controller('CourseController', [
     };
 
     $scope.incrementUpvotes = function(review){
-      //Enumerate tr:s
+      //Enumerate comments according to old positions. 
+      //This is needed for animation when comments change place
       $('tr[ng-repeat]').each(function(i, ele){
         ele.setAttribute('id', i);
       });
@@ -84,4 +86,17 @@ angular.module('myApp').animation('.comment', function(){
       }
     }
   };
-})
+});
+
+// Ugly hack to make the page scroll to top when new content is loaded
+angular.module('myApp').run(['$window', '$rootScope', function($window, $rootScope){
+  $rootScope.$on('$viewContentLoaded', function(){
+    var interval = setInterval(function(){
+      if (document.readyState == "complete") {
+        window.scrollTo(0, 0);
+        clearInterval(interval);
+      }
+    },20);
+  });
+}]);
+

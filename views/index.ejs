@@ -20,21 +20,16 @@
   <body ng-app="myApp">
   	<div class="row">
   		<div class="col-md-8 col-md-offset-2">
-  			<ui-view></ui-view>
+        <app-header></app-header>
+        <ui-view></ui-view>
   		</div>
   	</div>
 
     <!-- INDEX template -->
     <script type="text/ng-template" id="/index.html">
-    	<div class="page-header">
-    		<h1>
-        <img class="spy-img" src="imgs/spy.png" width="50px;">
-        &nbsp;Liu Course Reviews
-        </h1>
-    	</div>
+      
 
-
-    	<div ng-repeat="course in courses | orderBy: '-year +code'" style="padding: 5px; margin-bottom: 10px;">
+    	<div ng-repeat="course in courses | orderBy: '-year +satisfactionPercentage +code'" style="padding: 5px; margin-bottom: 10px;">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px;">
 	    			{{course.code}}, {{course.year}}
@@ -56,34 +51,28 @@
 
 
     <script type="text/ng-template" id="/courses.html">
-      <div class="page-header">
-        <h1>
-          <img class="spy-img" src="imgs/spy.png" width="50px;">
-          &nbsp;{{course.code}}, {{course.year}}
-        </h1>
-        <h3>{{course.title}}</h3>
-        <small>{{course.prof}}, Block {{course.block}}, Nivå {{course.level}}, {{course.hp}}hp</small>
 
-        <div ng-show="course.satisfactionPercentage !== undefined"
-          style="margin-top: 10px;"> 
-          <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
+      <h3>{{course.code}}, {{course.year}}</h3>
+      <h4>{{course.title}}</h4>
+      <small>{{course.prof}}, Block {{course.block}}, Nivå {{course.level}}, {{course.hp}}hp</small>
+
+      <div ng-show="course.satisfactionPercentage !== undefined" style="margin-top: 10px;"> 
+        <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
           <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;">
           {{course.satisfactionPercentage}}%
-          </span>
-          
-          <span style="color: #c22; font-size: 20px">
+        </span>
+        
+        <span style="color: #c22; font-size: 20px">
           <img ng-src="imgs/icon_sad.png" width="20px;" style="margin-top: -5px;">
           {{100 - course.satisfactionPercentage}}%
-          </span>
-        </div>
+        </span>
       </div>
-
-
+      <br><br>
+      
       
       <div ng-repeat="exam in course.exams" class="chart">
-        <d3-bars exam="exam">
+        <d3-bars exam="exam" ng-show="exam.stats.length > 1 || true">
       </div>
-      <small style="display: inline-block; width: 60px;">Betyg som registrerats år {{course.year}}.</small>
       <p ng-hide="course.exams.length">
         Ingen statistik
       </p>
@@ -102,7 +91,7 @@
             <p>
               <img ng-src="imgs/icon_{{review.positive ? 'happy' : 'sad'}}.png" width="15px;" style="margin-top:-5px;">
               {{review.upvotes}}
-              <img src="imgs/arrow_up.png" ng-click="incrementUpvotes(review)" width="15px" ng-hide="review.voted && false">
+              <span class="upvote" ng-click="incrementUpvotes(review)" ng-hide="review.voted"> </span>
             </p>
           </td>
           <td>
@@ -130,6 +119,7 @@
     <script src="js/factories/d3.js"></script>
     <script src="js/directives/myReviewForm.js"></script>
     <script src="js/directives/d3-bars.js"></script>
+    <script src="js/directives/appHeader.js"></script>
 
   </body>
 </html>

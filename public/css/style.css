@@ -30,9 +30,18 @@ h1{
 	margin-top: -25px;
 }
 
-.agree_comment{
-	margin-top: -10px;
-	padding-top: -10px;
+.upvote{
+	display: inline-block;
+	overflow: hidden;
+	width: 20px;
+	height: 12px;
+	background: url("../imgs/upvote.png");
+	background-position: 0 -12px;
+}
+
+.upvote:hover{
+	background-position: 0 1px;
+	cursor: pointer;
 }
 
 /*
@@ -56,31 +65,16 @@ small{
 }
 
 
-/* Simple animation */
-/*
-.comment.ng-move {
-  -webkit-transition:0.3s linear all;
-  -moz-transition:0.3s linear all;
-  -o-transition:0.3s linear all;
-  transition:0.3s linear all;
-  top: 40px;
-}
-
-.comment.ng-move.ng-move-active {
-  top: 0px;
-} */
-
 /* 
 	D3 styles 
 */
-.chart {
+
+.chart{
 	float: left;
 }
-.chart rect {
-  /*fill: rgb(215, 77, 76);*/
-  /*fill: rgb(161, 215, 225);*/
-  fill: #bbb;
 
+.chart rect {
+	fill: #555;
 }
 
 .chart text{
@@ -97,7 +91,7 @@ small{
 }
 
 .chart .bar_label {
-  fill: white;
+  fill: black;
   font: 10px sans-serif;
 }
 

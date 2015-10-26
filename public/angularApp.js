@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'd3']);
+angular.module('myApp', ['ui.router', 'd3', 'ngAnimate']);
 
 
 angular.module('myApp').config([

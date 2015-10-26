@@ -8,7 +8,10 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular-animate.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="angularApp.js"></script>
 
 		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
@@ -39,9 +42,10 @@
           <p style="font-size:15px; margin-left:10px;">
             {{course.title}}
           </p>
-          <p class="text-right" style="margin-top: -40px;font-size:17px;" ng-show="{{course.satisfactionPercentage}}">
+          <p class="text-right" style="margin-top: -40px;font-size:17px;" ng-show="course.satisfactionPercentage !== undefined">
           <span style="color: #2c2; font-size: 20px">
-            ☺ {{course.satisfactionPercentage}}%
+          <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;">
+            {{course.satisfactionPercentage}}%
           </span>
         </p>
 				</a>
@@ -60,14 +64,16 @@
         <h3>{{course.title}}</h3>
         <small>{{course.prof}}, Block {{course.block}}, Nivå {{course.level}}, {{course.hp}}hp</small>
 
-        <div ng-show="{{course.satisfactionPercentage}}"
+        <div ng-show="course.satisfactionPercentage !== undefined"
           style="margin-top: 10px;"> 
           <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
-          ☺ {{satisfactionPercentage()}}%
+          <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;">
+          {{course.satisfactionPercentage}}%
           </span>
           
           <span style="color: #c22; font-size: 20px">
-          ☹ {{100 - satisfactionPercentage()}}%
+          <img ng-src="imgs/icon_sad.png" width="20px;" style="margin-top: -5px;">
+          {{100 - course.satisfactionPercentage}}%
           </span>
         </div>
       </div>
@@ -82,6 +88,7 @@
         Ingen statistik
       </p>
 
+
       <div style="clear: both;">
         <hr>
 
@@ -92,24 +99,25 @@
         </p>
           <tr ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" class="comment">
           <td style="width: 65px;">
-            <span style="color: #{{review.positive ? '2c2' : 'c22'}};">
-              <span style="font-size: 20px;">
-                <img src="imgs/icon_{{review.positive ? 'happy' : 'sad'}}.png" width="20px;">
-              </span>
-            </span>
-            <span>{{review.upvotes}}</span>
-            <a ng-click="incrementUpvotes(review)" ng-hide="review.voted">+1</a>
-          </td>
-          <td>
             <p>
-            {{review.body}}
+              <img ng-src="imgs/icon_{{review.positive ? 'happy' : 'sad'}}.png" width="15px;" style="margin-top:-5px;">
+              {{review.upvotes}}
+              <img src="imgs/arrow_up.png" ng-click="incrementUpvotes(review)" width="15px" ng-hide="review.voted && false">
             </p>
           </td>
+          <td>
+            <p>{{review.body}}</p>
+          </td>
         </table>
-
+        <table ng-show="loadingComment">
+          <tr class="comment">
+            <td style="width: 65px;"></td>
+            <td>Loading ...</td>
+          </tr>
+        </table>
         <br>
 
-        <div my-review-form></div>
+        <div my-review-form id="commentForm"></div>
       </div>
 
     </script>

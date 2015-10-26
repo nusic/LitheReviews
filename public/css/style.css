@@ -1,14 +1,16 @@
 body {
   padding: 50px;
-  font: 14px Helvetica, Arial, sans-serif;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+  color: #555;
 }
 
 a:hover{
 	cursor: pointer;
+	color: #999;
 	text-decoration: none;
 }
 
@@ -25,9 +27,13 @@ h1{
 }
 
 .spy-img{
-	margin-top: -29px;
+	margin-top: -25px;
 }
 
+.agree_comment{
+	margin-top: -10px;
+	padding-top: -10px;
+}
 
 /*
 	COMMENT
@@ -44,7 +50,25 @@ small{
 	color: lightgray;
 }
 
+.comment{
+	position: relative;
+    display: block;
+}
 
+
+/* Simple animation */
+/*
+.comment.ng-move {
+  -webkit-transition:0.3s linear all;
+  -moz-transition:0.3s linear all;
+  -o-transition:0.3s linear all;
+  transition:0.3s linear all;
+  top: 40px;
+}
+
+.comment.ng-move.ng-move-active {
+  top: 0px;
+} */
 
 /* 
 	D3 styles 
@@ -54,7 +78,8 @@ small{
 }
 .chart rect {
   /*fill: rgb(215, 77, 76);*/
-  fill: rgb(161, 215, 225);
+  /*fill: rgb(161, 215, 225);*/
+  fill: #999;
 
 }
 

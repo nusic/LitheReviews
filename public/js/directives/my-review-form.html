@@ -1,11 +1,11 @@
 <div class="btn-group">
 <label class="btn btn-success">
-  <input type="radio" class="ng-hide" ng-model="reviewType" value="+">
+  <input type="radio" class="ng-hide" ng-model="reviewType" ng-click="goToInput()" value="+">
     &nbsp;&nbsp;Lägg till något som du gillade&nbsp;&nbsp;&nbsp;
   </input>
 </label>
 <label class="btn btn-danger">
-  <input type="radio" class="ng-hide" ng-model="reviewType" value="-">
+  <input type="radio" class="ng-hide" ng-model="reviewType" ng-click="goToInput()" value="-">
     Lägg till något som kan bli bättre
   </input>
 </label>
@@ -13,7 +13,7 @@
 
 <form ng-hide="reviewType === undefined" ng-submit="addReview()" style="margin-top:30px;">
 <div class="form-group">
-  <input type="text"
+  <input type="text" id="commentInputField"
     class="form-control"
     placeholder="Skriv en sak som {{reviewType == '+' ? 'var bra' : 'kan bli bättre'}}" 
     ng-model="body"

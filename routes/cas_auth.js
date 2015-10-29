@@ -15,13 +15,16 @@ for (var k in interfaces) {
 
 var myIp = addresses[0];
 console.log('Local ip-address:', myIp);
+var myPort = 5000;
+var hostAddress = process.env.HOST_ADDR || (myIp + ':5000'); 
 
+console.log('hostAddress: ' + hostAddress);
 
 
 var CAS = require('cas');
 var cas = new CAS({
   base_url: 'https://login.liu.se/cas', 
-  service: 'http://' + myIp +':5000/login',
+  service: 'http://' + hostAddress + '/login',
 });
 
 // Used as middleware on all routes

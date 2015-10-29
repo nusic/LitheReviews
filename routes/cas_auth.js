@@ -14,7 +14,6 @@ for (var k in interfaces) {
 }
 
 var myIp = addresses[0];
-console.log('Local ip-address:', myIp);
 var myPort = 5000;
 var hostAddress = process.env.HOST_ADDR || (myIp + ':5000'); 
 

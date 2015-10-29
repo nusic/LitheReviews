@@ -36,9 +36,11 @@ app.use(logger('dev'));
 app.use(cookieParser());
 
 app.use(session({ 
-  secret: 'to be changed', 
+  secret: process.env.SESSION_SECRET, 
+  resave: true,
+  saveUninitialized: false,
   rolling: true,
-  cookie: { maxAge: 60*60*1000 }
+  cookie: { maxAge: 3*60*60*1000 }
 }));
 
 app.use(bodyParser.json());

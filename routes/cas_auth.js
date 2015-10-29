@@ -8,7 +8,7 @@ for (var k in interfaces) {
   for (var k2 in interfaces[k]) {
     var address = interfaces[k][k2];
     if (address.family === 'IPv4' && !address.internal) {
-        addresses.push(address.address);
+      addresses.push(address.address);
     }
   }
 }
@@ -21,7 +21,7 @@ console.log('Local ip-address:', myIp);
 var CAS = require('cas');
 var cas = new CAS({
   base_url: 'https://login.liu.se/cas', 
-  service: 'http://' + myIp +':3000/login',
+  service: 'http://' + myIp +':5000/login',
 });
 
 // Used as middleware on all routes

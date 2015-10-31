@@ -27,7 +27,6 @@
 
     <!-- INDEX template -->
     <script type="text/ng-template" id="/index.html">
-      
 
     	<div ng-repeat="course in courses | orderBy: '-year +satisfactionPercentage +code'" style="padding: 5px; margin-bottom: 10px;">
     		<a href="#/courses/{{course._id}}">
@@ -38,14 +37,17 @@
             {{course.title}}
           </p>
           <p class="text-right" style="margin-top: -40px;font-size:17px;" ng-show="course.satisfactionPercentage !== undefined">
-          <span style="color: #2c2; font-size: 20px">
-          <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;">
-            {{course.satisfactionPercentage}}%
-          </span>
-        </p>
+            <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;">
+            <span style="color: #2c2;">
+              {{course.satisfactionPercentage}}%
+            </span>
+          </p>
+          <p class="text-right" style="margin-top: -10px;" ng-show="course.reviews.length > 0">
+          <small>
+              {{course.reviews.length}} review{{course.reviews.length > 1 ? 's' : ''}}
+            </small>
+          </p>
 				</a>
-
-    		
     	</div>
     </script>
 
@@ -54,7 +56,20 @@
 
       <h3>{{course.code}}, {{course.year}}</h3>
       <h4>{{course.title}}</h4>
-      <small>{{course.prof}}, Block {{course.block}}, Nivå {{course.level}}, {{course.hp}}hp</small>
+      <small>
+        Med: {{course.prof}}, 
+        <a href="http://kdb-5.liu.se/liu/lith/studiehandboken/svkursplan.lasso?&k_budget_year={{course.year}}&k_kurskod={{course.code}}" 
+          target="_blank" style="color: lightgray; text-decoration: underline;">Studiehandboken</a>,
+        <a href="{{course.courseSite}}" ng-show="course.courseSite !== undefined" target="_blank" style="color: lightgray; text-decoration: underline;">Kurssida</a>
+      </small>
+
+      <small ng-show="course.block !== '-' && false">
+        <br>
+        Period: {{course.period}},
+        Block: {{course.block}},
+        Nivå: {{course.level}}, 
+        Omfattning: {{course.hp}}hp,
+      </small>
 
       <div ng-show="course.satisfactionPercentage !== undefined" style="margin-top: 10px;"> 
         <span style="color: #2c2; font-size: 20px; margin-right: 20px;">

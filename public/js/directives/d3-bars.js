@@ -6,10 +6,12 @@ angular.module('myApp')
 			d3Service.d3().then(function (d3){
 				//d3 is the raw d3 object
 
-			var title = scope.exam.examType;
+			var code = scope.exam.code;
+			var title = scope.exam.name;
 	  		var data = scope.exam.stats;
 
-			var margin = {top: 10, right: 45, bottom: 20, left: 0};
+
+			var margin = {top: 30, right: 25, bottom: 20, left: 0};
 			var width = 150;
 			var height= 150;
 
@@ -26,7 +28,7 @@ angular.module('myApp')
 
 			d3.select(element[0]).append('p')
 				.attr('class', 'title')
-				.text('Betyg för ' + title);
+				.html('Betyg för ' + title + ' (' + code + ')');
 
 			x.domain(data.map(function(d){ return d.grade; }));
 			y.domain([0, d3.max(data, function(d){ return d.freq; })]);
@@ -42,7 +44,7 @@ angular.module('myApp')
 
 			bar.append('rect')
 				.attr('y', function (d) { return margin.top + y(d.freq); })
-				.attr('height', function (d) { return height - y(d.freq); })
+				.attr('height', function (d) { return height - y(d.freq)+1; })
 				.attr('width', barWidth - 1);
 
 			bar.append('text')

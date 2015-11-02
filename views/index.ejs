@@ -28,7 +28,7 @@
     <!-- INDEX template -->
     <script type="text/ng-template" id="/index.html">
 
-    	<div ng-repeat="course in courses | orderBy: '-year +satisfactionPercentage +code'" style="padding: 5px; margin-bottom: 5px;">
+    	<div ng-repeat="course in courses | orderBy: '+title'" style="padding: 5px; margin-bottom: 5px;">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px; margin-top: 15px;">
 	    			{{course.code}}, {{course.year}}
@@ -53,14 +53,16 @@
 
 
     <script type="text/ng-template" id="/courses.html">
-
       <h3>{{course.code}}, {{course.year}}</h3>
       <h4>{{course.title}}</h4>
       <small>
-        Med: {{course.prof}}, 
+        Examinator: {{course.prof}} |
         <a href="http://kdb-5.liu.se/liu/lith/studiehandboken/svkursplan.lasso?&k_budget_year={{course.year}}&k_kurskod={{course.code}}" 
-          target="_blank" style="color: lightgray; text-decoration: underline;">Studiehandboken</a>,
-        <a href="{{course.courseSite}}" ng-show="course.courseSite !== undefined" target="_blank" style="color: lightgray; text-decoration: underline;">Kurssida</a>
+          target="_blank">Studiehandboken</a>,
+        <a href="{{course.site}}" ng-show="course.site !== undefined" target="_blank"
+        >
+        Kurssida
+        </a>
       </small>
 
       <small ng-show="course.block !== '-' && false">
@@ -82,24 +84,33 @@
           {{100 - course.satisfactionPercentage}}%
         </span>
       </div>
-      <br><br>
-      
-      
-      <div ng-repeat="exam in course.exams" class="chart">
-        <d3-bars exam="exam" ng-show="exam.stats.length > 1 || true">
+
+      <div id="statsContainer" style="margin-top: 30px;">
+        <div ng-repeat="exam in course.exams" class="chart"
+            title="Betyg som registrerats år {{course.year}}, inkl. omtentor etc.">
+          <d3-bars exam="exam" ng-hide="exam.hide && !showAllExams">
+        </div>
+        <p ng-hide="course.exams.length">Ingen statistik</p>
+        <div style="clear: both; padding-top:10px;">
+          <small ng-hide="{{course.exams.noHides !== undefined}}">
+            <input type="checkbox" ng-model="showAllExams"> Visa all statistik |
+          </small>
+          <small>
+            källa: 
+            <a href="http://www4.student.liu.se/tentaresult/?kurskod={{course.code}}&provkod=&datum=&kursnamn=&sort=0&search=S" target="_blank">
+            LiU tentamensresultat
+            </a>
+
+          </small>
+        </div>
       </div>
-      <p ng-hide="course.exams.length">
-        Ingen statistik
-      </p>
-
-
-      <div style="clear: both;">
+      
         <hr>
 
         <!-- COMMENT SECTION -->
         <table id="comment-section">
         <p ng-hide="course.reviews.length">
-          Ingen har skrivit något än...
+          Ingen har skrivit något om den här kursen än. Släng in en kommentar vettja!
         </p>
           <tr ng-repeat="(i, review) in course.reviews | orderBy: '-upvotes'" class="comment">
           <td style="width: 65px;">

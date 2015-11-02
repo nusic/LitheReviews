@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -12,6 +12,11 @@ a:hover{
 	cursor: pointer;
 	color: #999;
 	text-decoration: none;
+}
+
+small a{
+	color: lightgray; 
+	text-decoration: underline;
 }
 
 h3{

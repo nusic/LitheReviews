@@ -77,11 +77,12 @@ router.get('/courses/:course', function(req, res, next){
 			if(err) return next(err);
 
 			req.course.exams = exams;
-			req.course.save(function (err, course){
-				if(err) return next(err);
+			console.log(exams);
+//			req.course.save(function (err, course){
+//				if(err) return next(err);
 
 				populateReviewsAndSend(req, res);
-			});
+//			});
 		});
 	}
 	else {

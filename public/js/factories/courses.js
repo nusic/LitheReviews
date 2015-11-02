@@ -12,13 +12,15 @@ angular.module('myApp').factory('courses', ['$http', function($http){
 
   o.get = function(id){
     return $http.get('/courses/' + id).then(function(res){
+      res.data.exams = setPotentialGraphHides(res.data.exams);
       return res.data;
     });
   };
 
   o.getStats = function(id){
     return $http.get('/courses/' + id + '/examstats').then(function(res){
-      return res.data;
+      console.log(res);
+      return setPotentialGraphHides(res.data);
     });
   }
 
@@ -35,6 +37,35 @@ angular.module('myApp').factory('courses', ['$http', function($http){
         console.log(err);
       });
   };
+
+  function setPotentialGraphHides(examStatsJSON){
+    var numShow = 3;
+
+    if(examStatsJSON.length <= numShow){
+      examStatsJSON.noHides = true;
+      return examStatsJSON;
+    }
+
+    //give score
+    examStatsJSON.forEach(function (exam, i){
+      examStatsJSON[i].score = exam.stats.length;
+      var numDifferentGrades = 0;
+      exam.stats.forEach(function(d){
+        numDifferentGrades += +(d.freq > 0);
+      });
+      examStatsJSON[i].score += numDifferentGrades;
+      examStatsJSON[i].score += Math.log(exam.total);
+    });
+
+    examStatsJSON = examStatsJSON.sort(function(e1, e2){
+      return e1.score < e2.score;
+    });
+
+    for (var i = numShow; i < examStatsJSON.length; i++) {
+      examStatsJSON[i].hide = true;
+    };
+    return examStatsJSON;
+  }
 
   return o;
 }]);

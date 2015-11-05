@@ -9,9 +9,10 @@ var CourseSchema = new mongoose.Schema({
 	period: String,
 	block: String,
 	hp: Number,
-	courseSite: String,
+	site: String,
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+	programmes: [String]
 });
 
 CourseSchema.methods.updateSatisfaction = function(callback){

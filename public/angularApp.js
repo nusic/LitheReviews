@@ -4,15 +4,22 @@ angular.module('myApp', ['ui.router', 'd3', 'ngAnimate']);
 angular.module('myApp').config([
 '$stateProvider',
 '$urlRouterProvider',
-function ($stateProvider, $urlRouterProvider) {
+'$locationProvider',
+function ($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
-  .state('home', {
+    .state('home', {
     url: '/',
     templateUrl: '/index.html',
     controller: 'MainController',
+  })
+
+  .state('programme', {
+    url: '/programme/{id}',
+    templateUrl: '/programme.html',
+    controller: 'ProgrammeController',
     resolve: {
-      coursePromise: ['courses', function(courses){
-        return courses.getAll();
+      coursePromise: ['$stateParams', 'courses', function($stateParams, courses){
+        return courses.getForProgramme($stateParams.id);
       }]
     }
   })

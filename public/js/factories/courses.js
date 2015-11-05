@@ -10,6 +10,12 @@ angular.module('myApp').factory('courses', ['$http', function($http){
     });
   };
 
+  o.getForProgramme = function(programme){
+    return $http.get('/programme/' + programme).then(function(res){
+      angular.copy(res.data, o.courses);
+    });
+  }
+
   o.get = function(id){
     return $http.get('/courses/' + id).then(function(res){
       res.data.exams = setPotentialGraphHides(res.data.exams);
@@ -54,7 +60,7 @@ angular.module('myApp').factory('courses', ['$http', function($http){
         numDifferentGrades += +(d.freq > 0);
       });
       examStatsJSON[i].score += numDifferentGrades;
-      examStatsJSON[i].score += Math.log(exam.total);
+      examStatsJSON[i].score += 0.5*Math.log(exam.total);
     });
 
     examStatsJSON = examStatsJSON.sort(function(e1, e2){

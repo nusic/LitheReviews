@@ -94,10 +94,12 @@ router.get('/courses/:course', function(req, res, next){
 
 	if(req.course.exams){
 		liu.search(req.course, function (err, exams){
-			if(err) return next(err);
+			if(err) {
+				console.error(err);
+			}
 
-			req.course.exams = exams;
-			console.log(exams);
+			req.course.exams = err ? err : exams;
+
 			populateReviewsAndSend(req, res);
 		});
 	}

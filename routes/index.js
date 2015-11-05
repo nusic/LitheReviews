@@ -24,6 +24,25 @@ var Course = mongoose.model('Course');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 
+
+router.param('programme', function(req, res, next, id){
+	Course.find({programmes: id}, function(err, courses){
+		if(err) return next(err);
+
+		if(!courses || !courses.length){
+			return next(new Error('Cannot find courses that match program' + id));
+		}
+		req.programme = id;
+		req.courses = courses;
+		return next();
+	});
+});
+
+router.get('/programme/:programme', function(req, res, next){
+	return res.json(req.courses);
+});
+
+
 /* REST routes */ 
 router.get('/courses', function(req, res, next){
 	Course.find(function(err, courses){
@@ -43,6 +62,7 @@ router.post('/courses', function(req, res, next){
 		res.json(course);
 	});
 });
+
 
 // Preloading post objects
 router.param('course', function(req, res, next, id){
@@ -78,11 +98,7 @@ router.get('/courses/:course', function(req, res, next){
 
 			req.course.exams = exams;
 			console.log(exams);
-//			req.course.save(function (err, course){
-//				if(err) return next(err);
-
-				populateReviewsAndSend(req, res);
-//			});
+			populateReviewsAndSend(req, res);
 		});
 	}
 	else {

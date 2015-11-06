@@ -83,7 +83,7 @@ router.get('/courses/:course', function(req, res, next){
 			if(err) return next(err);
 
 			User.findOrCreate({liuId: req.session.liuId}, function(err, user){
-				if(err) return new Error(err);
+				if(err) return next(err);
 
 				var courseObject = course.toObject();
 				courseObject.reviews = course.markVotedComments(user);
@@ -94,6 +94,7 @@ router.get('/courses/:course', function(req, res, next){
 
 	if(req.course.exams){
 		liu.search(req.course, function (err, exams){
+			console.log('liu search returned')
 			if(err) {
 				console.error(err);
 			}
@@ -102,6 +103,7 @@ router.get('/courses/:course', function(req, res, next){
 
 			populateReviewsAndSend(req, res);
 		});
+		console.log('called liu exam search');
 	}
 	else {
 		populateReviewsAndSend(req, res);

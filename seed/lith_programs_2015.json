@@ -1,0 +1,334 @@
+[
+	{
+		"code": "D",
+		"name": "datateknik",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "DPU",
+		"name": "design och produktutveckling",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "EM",
+		"name": "energi - miljö - management",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "I",
+		"name": "industriell ekonomi",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "Ii",
+		"name": "industriell ekonomi - internationell",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "IT",
+		"name": "informationsteknologi",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "KB",
+		"name": "kemisk biologi",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "M",
+		"name": "maskinteknik",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "MED",
+		"name": "medicinsk teknik",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "TB",
+		"name": "teknisk biologi",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "U",
+		"name": "mjukvaruteknik",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "Y",
+		"name": "teknisk fysik och elektroteknik",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "Yi",
+		"name": "teknisk fysik och elektroteknik - internationell",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "ED",
+		"name": "elektronikdesign",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "KTS",
+		"name": "kommunikations- och transportsystem/kommunikation, transport och samhälle",
+		"type": "Civilingenjörsutbildning"
+	},
+	{
+		"code": "MT",
+		"name": "medieteknik",
+		"type": "Civilingenjörsutbildning"
+	},
+
+
+	{
+		"code": "BI",
+		"name": "byggnadsteknik",
+		"type": "Högskoleingenjörsutbildning"
+	},
+	{
+		"code": "DI",
+		"name": "datateknik",
+		"type": "Högskoleingenjörsutbildning"
+	},
+	{
+		"code": "EL",
+		"name": "elektronik",
+		"type": "Högskoleingenjörsutbildning"
+	},
+	{
+		"code": "KA",
+		"name": "kemisk analysteknik",
+		"type": "Högskoleingenjörsutbildning"
+	},
+	{
+		"code": "MI",
+		"name": "maskinteknik",
+		"type": "Högskoleingenjörsutbildning"
+	},
+
+
+	{
+		"code": "Bio",
+		"name": "biologi",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+	{
+		"code": "C",
+		"name": "datavetenskap",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+	{
+		"code": "FyN",
+		"name": "fysik och nanovetenskap",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+	{
+		"code": "Kem",
+		"name": "kemi - molekylär design",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+	{
+		"code": "Kebi",
+		"name": "kemisk biologi",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+	{
+		"code": "Mat",
+		"name": "matematik",
+		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning"
+	},
+
+	{
+		"code": "CM-DE",
+		"name": "Möbeldesign",
+		"type": "Carl Malmsten: Design- och hantverksutbildningar"
+	},
+	{
+		"code": "CM-KO",
+		"name": "Möbelkonservering",
+		"type": "Carl Malmsten: Design- och hantverksutbildningar"
+	},
+	{
+		"code": "CM-SN",
+		"name": "Möbelsnickeri",
+		"type": "Carl Malmsten: Design- och hantverksutbildningar"
+	},
+	{
+		"code": "CM-TA",
+		"name": "Möbeltapetsering",
+		"type": "Carl Malmsten: Design- och hantverksutbildningar"
+	},
+
+
+	{
+		"code": "FL",
+		"name": "Flygtrafik och logistik",
+		"type": "Övriga kandidatprogram"
+	},
+	{
+		"code": "FTL",
+		"name": "Flygtransport och logistik",
+		"type": "Övriga kandidatprogram"
+	},
+	{
+		"code": "GDK",
+		"name": "Grafisk design och kommunikation",
+		"type": "Övriga kandidatprogram"
+	},
+	{
+		"code": "IP",
+		"name": "Innovativ programmering",
+		"type": "Övriga kandidatprogram"
+	},
+	{
+		"code": "SL",
+		"name": "Samhällets logistik",
+		"type": "Övriga kandidatprogram"
+	},
+
+	{
+		"code": "ACG",
+		"name": "Advanced Computer Graphics",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "AER",
+		"name": "Aeronautical Engineering",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "BME",
+		"name": "Biomedical Engineering",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "COE",
+		"name": "Communication Electronics",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "COS",
+		"name": "Computer Systems",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "CS",
+		"name": "Computer Science",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "CSY",
+		"name": "Communication Systems",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "DAV",
+		"name": "Datavetenskap",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "ECO",
+		"name": "Ecology and the Environment",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "ELE",
+		"name": "Electronics Engineering",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "ENV",
+		"name": "Energy and Environmental Engineering",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "ETH",
+		"name": "Applied Ethology and Animal Biology",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "IND",
+		"name": "Industrial Engineering and Management",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "KOS",
+		"name": "Organic Synthesis/Medicinal Chemistry",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MEC",
+		"name": "Mechanical Engineering",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MFYS",
+		"name": "Fysik och nanovetenskap",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MMAT",
+		"name": "Matematik",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MSK",
+		"name": "Maskinteknik",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MPN",
+		"name": "Materials Physics and Nanotechnology",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "MSN",
+		"name": "Materials Science and Nanotechnology",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "PRO",
+		"name": "Protein Sceince",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "SOC",
+		"name": "System-on-Chip",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "SUS",
+		"name": "Sustainability Engineering and Management",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "TSL",
+		"name": "Intelligent Transport Systems and Logistics",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+	{
+		"code": "WNE",
+		"name": "Wireless Networks and Electronics",
+		"type": "Påbyggnadsutbildning (magister/master)"
+	},
+
+
+	{
+		"code": "ASIENJ, ASIENK",
+		"name": "Asienår med inriktning mot Japan resp. Kina",
+		"type": "Behörighetsgivande utbildning"
+	},
+	{
+		"code": "Basår",
+		"name": "Tekniskt/naturvetenskapligt basår",
+		"type": "Behörighetsgivande utbildning"
+	},
+
+
+	{
+		"code": "FRIST",
+		"name": "Fristående kursubudet",
+		"type": "Övrigt"
+	}
+]

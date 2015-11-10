@@ -12,7 +12,7 @@ var CourseSchema = new mongoose.Schema({
 	site: String,
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
-	programmes: [String]
+	programs: [String]
 });
 
 CourseSchema.methods.updateSatisfaction = function(callback){

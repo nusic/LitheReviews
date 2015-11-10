@@ -13,13 +13,13 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
     controller: 'MainController',
   })
 
-  .state('programme', {
-    url: '/programme/{id}',
-    templateUrl: '/programme.html',
-    controller: 'ProgrammeController',
+  .state('program', {
+    url: '/program/{id}',
+    templateUrl: '/program.html',
+    controller: 'ProgramController',
     resolve: {
       coursePromise: ['$stateParams', 'courses', function($stateParams, courses){
-        return courses.getForProgramme($stateParams.id);
+        return courses.getForProgram($stateParams.id);
       }]
     }
   })

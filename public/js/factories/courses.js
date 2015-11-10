@@ -10,8 +10,8 @@ angular.module('myApp').factory('courses', ['$http', function($http){
     });
   };
 
-  o.getForProgramme = function(programme){
-    return $http.get('/programme/' + programme).then(function(res){
+  o.getForProgram = function(program){
+    return $http.get('/program/' + program).then(function(res){
       angular.copy(res.data, o.courses);
     });
   }

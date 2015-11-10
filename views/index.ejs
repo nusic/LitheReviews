@@ -25,15 +25,15 @@
   		</div>
   	</div>
 
-    <!-- PROGRAMMES template -->
+    <!-- PROGRAMS template -->
     <script type="text/ng-template" id="/index.html">
-      <a ng-repeat="programme in programmes | orderBy: +programme" href="#/programme/{{programme}}">
-        <h4>{{programme}}</h4>
+      <a ng-repeat="program in programs | orderBy: +program" href="#/program/{{program}}">
+        <h4>{{program}}</h4>
       </a>
     </script>    
 
-    <!-- PROGRAMME COURSE LIST template -->
-    <script type="text/ng-template" id="/programme.html">
+    <!-- PROGRAM COURSE LIST template -->
+    <script type="text/ng-template" id="/program.html">
     	<div ng-repeat="course in courses | orderBy: '+period'" style="padding: 5px; margin-bottom: 5px;">
     		<a href="#/courses/{{course._id}}">
 	    		<span style="font-size:20px; margin-left:10px; margin-top: 15px;">
@@ -149,7 +149,7 @@
 
     
     <script src="js/controllers/mainController.js"></script>
-    <script src="js/controllers/programmeController.js"></script>
+    <script src="js/controllers/programController.js"></script>
     <script src="js/controllers/courseController.js"></script>
     <script src="js/factories/courses.js"></script>
     <script src="js/factories/d3.js"></script>

@@ -1,9 +1,9 @@
-angular.module('myApp').controller('ProgrammeController',[
+angular.module('myApp').controller('ProgramController',[
   '$scope',
   '$stateParams',
   'courses',
   function ($scope, $stateParams, courses){
     $scope.courses = courses.courses;
-    $scope.programme = $stateParams.id;
+    $scope.program = $stateParams.id;
   }
 ]);

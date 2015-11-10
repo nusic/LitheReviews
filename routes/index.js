@@ -25,20 +25,22 @@ var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 
 
-router.param('programme', function(req, res, next, id){
-	Course.find({programmes: id}, function(err, courses){
-		if(err) return next(err);
+router.param('program', function(req, res, next, id){
+	Course.find({programs: id}, function(err, courses){
+		if(err) {
+			return next(err);
+		}
 
 		if(!courses || !courses.length){
 			return next(new Error('Cannot find courses that match program' + id));
 		}
-		req.programme = id;
+		req.program = id;
 		req.courses = courses;
 		return next();
 	});
 });
 
-router.get('/programme/:programme', function(req, res, next){
+router.get('/program/:program', function(req, res, next){
 	return res.json(req.courses);
 });
 

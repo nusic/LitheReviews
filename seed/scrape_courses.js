@@ -5,13 +5,13 @@ var liu_course_info = require('../lib/liu_course_info.js');
 
 
 var query = {
-	programme: 'MT',
+	program: 'MT',
 	year: 2015,
 }
 
-var outputFile = 'courses_'+query.programme+'_'+query.year+'.json';
+var outputFile = 'courses_'+query.program+'_'+query.year+'.json';
 
-console.log('Scraping courses of: ' + query.programme);
+console.log('Scraping courses of: ' + query.program);
 
 var courseArray = [];
 var numCourses = -1;

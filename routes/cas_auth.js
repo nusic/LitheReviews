@@ -39,7 +39,7 @@ exports.myValidate = function(req, res, next){
 
   // Allow next handler if liuId and liuTicket is provided
   // in the cookie
-  if(liuTicket && liuId && liuId.length === 8){
+  if(liuTicket && liuId){
     next();
   }
   else {

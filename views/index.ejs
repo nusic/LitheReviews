@@ -41,14 +41,14 @@
     <!-- PROGRAM COURSE LIST template -->
     <script type="text/ng-template" id="/program.html">
       <p ng-hide="courses.length > 0">
-        No courses available :/
+        No courses available for {{program}} ... 
       </p>
 
 
       <p ng-show="courses.length > 0">
-        <span style="color: #ccc;"> Sök: </span>
+        <span style="color: #ccc;">Sök: </span>
         <input ng-model="searchText" /> 
-        <span style="color: #ccc;"> kurskod, namn, examinator, period (6vt, 7ht2)</span>
+        <span style="color: #ccc;"> kurs, examinator, period (t ex 7ht2)</span>
       </p>
       <br />
 

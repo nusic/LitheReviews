@@ -8,12 +8,12 @@ angular.module('myApp')
 
 			var code = scope.exam.code;
 			var title = scope.exam.name;
-	  		var data = scope.exam.stats;
+	  		var data = scope.exam.grades;
 
 
-			var margin = {top: 30, right: 25, bottom: 20, left: 0};
-			var width = 150;
-			var height= 150;
+			var margin = {top: 10, right: 25, bottom: 20, left: 0};
+			var width = 120;
+			var height= 70;
 
 			var y = d3.scale.linear()
 		    	.range([height, 0]);

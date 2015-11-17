@@ -4,7 +4,8 @@ var ExamDataSchema = new mongoose.Schema({
 	grades: [mongoose.Schema.Types.Mixed],
 	year: Number,
 	course_code: String,
-	exam_code: String
+	code: String,
+	name: String
 });
 
 ExamDataSchema.index({year: -1, course_code: 1});
@@ -19,35 +20,43 @@ ExamDataSchema.statics.findByCourse = function(course, callback){
 		course_code: course.code
 	};
 
-	// Output is just the input course augmented with the data
-	var output = course;
 
 	this.find(query, function (err, exams){
 		if(err) return callback(err);
 
-		if(output.exams.length > exams.length) console.log('  could not find data for all exams for ' + course.code);
-		if(output.exams.length < exams.length) console.log('  found exceeding exam data for ' + course.code);
-	
-		output.exams.forEach(function (outputExam){
-			exams.forEach(function(exam){
-				if(outputExam.code !== exam.exam_code){
+		if(course.exams.length > exams.length) console.log('  could not find data for all exams for ' + course.code);
+		if(course.exams.length < exams.length) console.log('  found exceeding exam data for ' + course.code);
+
+
+		// If nobody got grade 3 (for example), then 3 is not in the data.
+		// However, we may figure out what possible grades there are, using
+		// the course info. Here we will add {grade: 3, freq: 0} and so on
+		exams.forEach(function (exam){
+			course.exams.forEach(function (templateExam){
+				if(!templateExam.stats || templateExam.code !== exam.code){
 					return;
 				}
-				outputExam.stats.forEach(function (ouputData){
-					ouputData.freq = 0;
+
+				templateExam.stats.forEach(function (templateData, index){
+					var found = false;
 					exam.grades.forEach(function (data){
-						if(ouputData.grade !== data.grade){
+						if(templateData.grade !== data.grade){
 							return;
 						}
-						//console.log(' grade: ' + ouputData.grade + ': ' + data.freq);
-
-						ouputData.freq = data.freq;
+						found = true;
+						templateData.freq = data.freq;
 					});
+					if(!found){
+						exam.grades.splice(index, 0, {
+							grade: templateData.grade,
+							freq: 0
+						});
+					}
 				});
 			});
 		});
 
-		callback(null, output.exams);
+		callback(null, exams);
 	});
 }
 

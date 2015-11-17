@@ -31,6 +31,7 @@ function importToMongoDB(jsonObjects, done){
 	var ExamData = mongoose.model('ExamData');
 
 	var currYear = new Date().getFullYear();
+	var onlyCurrYear = true;
 
 	connectMongoose();
 
@@ -49,7 +50,12 @@ function importToMongoDB(jsonObjects, done){
 	function removeExamdatas(){
 		console.log('  clearing examdatas ...')
 
-		ExamData.remove({year: currYear}, function (err){
+		var q = {};
+		if (onlyCurrYear){
+			q = { year: currYear };
+		}
+
+		ExamData.remove(q, function (err){
 			if(err) return onError(err);
 
 			insertNewExamdatas();	
@@ -59,9 +65,13 @@ function importToMongoDB(jsonObjects, done){
 	function insertNewExamdatas(){
 		console.log('  inserting new examdatas ...');
 
-		var jsonObjectsToInsert = jsonObjects.filter(function(o){
-			return o.year === currYear;
-		});
+		var jsonObjectsToInsert = jsonObjects;
+		if(onlyCurrYear){
+			jsonObjectsToInsert = jsonObjects.filter(function(o){
+				return o.year === currYear;
+			});
+		}
+		
 
 		ExamData.collection.insert(jsonObjectsToInsert, function (err){
 			if(err) return onError(err);

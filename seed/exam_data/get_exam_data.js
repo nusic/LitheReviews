@@ -96,7 +96,7 @@ function convertTSVToJSON(tsv){
 
 	// Headers according to LiU webmaster. Those are incorrect
 	// var headers = ['kurskod', 'provkod', 'datum', 'betyg', 'kursnamn', 'provnamn', 'antal', 'betygsordning', 'kursnamn_en', 'provnamn_en'];
-	var headers = ['course_code', 'exam_code', 'date', 'grade', 'course_name', 'exam_name', 'freq', 'grade_order', 'course_name_en', 'exam_name_en'];
+	var headers = ['course_code', 'code', 'date', 'grade', 'course_name', 'name', 'freq', 'grade_order', 'course_name_en', 'name_en'];
 	// var headers = ['course_code', 'provkod', 'datum', 'betyg', 'kursnamn', 'provnamn', 'antal', 'betygsordning', 'kursnamn_en', 'provnamn_en'];
 	var jsonObjects = [];
 	var lines = tsv.split('\n');
@@ -161,12 +161,12 @@ function preprocess(jsonObjects, callback){
 		obj.course_name = obj.course_name.substring(0, splitIndexCourseName).trim();
 		obj.course_name_en = obj.course_name_en.substring(0, splitIndexCourseNameEn).trim();
 
-		// 3. Remove hp/credits from exam_name/exam_name_en respectively
-		var splitIndexExamName = obj.exam_name.indexOf('  ');
-		var splitIndexExamNameEn = obj.exam_name_en.indexOf('  ');
+		// 3. Remove hp/credits from name/name_en respectively
+		var splitIndexExamName = obj.name.indexOf('  ');
+		var splitIndexExamNameEn = obj.name_en.indexOf('  ');
 
-		obj.exam_name = obj.exam_name.substring(0, splitIndexExamName);
-		obj.exam_name_en = obj.exam_name_en.substring(0, splitIndexExamNameEn);
+		obj.name = obj.name.substring(0, splitIndexExamName);
+		obj.name_en = obj.name_en.substring(0, splitIndexExamNameEn);
 
 		
 	});
@@ -185,7 +185,7 @@ function filter(jsonObjects){
 
 
 /**
- * Aggregates the freq property of exam data with the same year, course, exam_code and grade. 
+ * Aggregates the freq property of exam data with the same year, course, code and grade. 
  *
  * Input: 
  *	jsonObject - Array of exam objects
@@ -196,15 +196,15 @@ function filter(jsonObjects){
  *
  *	Example input: 
  *	[
- *		{"year": 2002, "course_name": "Datastrukturer", "exam_code": "UPG1", "grade": "G", "freq": 65, .. },
- *		{"year": 2002, "course_name": "Datastrukturer", "exam_code": "UPG1", "grade": "G", "freq": 13, .. },
- *		{"year": 2002, "course_name": "Datastrukturer", "exam_code": "UPG1", "grade": "U", "freq": 19, .. }
+ *		{"year": 2002, "course_name": "Datastrukturer", "code": "UPG1", "grade": "G", "freq": 65, .. },
+ *		{"year": 2002, "course_name": "Datastrukturer", "code": "UPG1", "grade": "G", "freq": 13, .. },
+ *		{"year": 2002, "course_name": "Datastrukturer", "code": "UPG1", "grade": "U", "freq": 19, .. }
  *	]
  *
  *	Example output:
  *	[
- *		{"year": 2002, "course_name": "Datastrukturer", "exam_code": "UPG1", "grade": "G", "freq": 78, .. },
- *		{"year": 2002, "course_name": "Datastrukturer", "exam_code": "UPG1", "grade": "U", "freq": 19, .. }
+ *		{"year": 2002, "course_name": "Datastrukturer", "code": "UPG1", "grade": "G", "freq": 78, .. },
+ *		{"year": 2002, "course_name": "Datastrukturer", "code": "UPG1", "grade": "U", "freq": 19, .. }
  *	]
  *
  */
@@ -218,7 +218,7 @@ function aggregate(jsonObjects){
 	for (var i = 0; i < jsonObjects.length; i++) {
 		var y = jsonObjects[i].year;
 		var c = jsonObjects[i].course_code;
-		var e = jsonObjects[i].exam_code;
+		var e = jsonObjects[i].code;
 		var g = jsonObjects[i].grade;
 		if(!o[y]){
 			o[y] = {};
@@ -278,8 +278,8 @@ function aggregate(jsonObjects){
 							aggregatedJsonObjects.push({
 								year: o[y][c][e][g].year,
 								course_code: c,
-								exam_code: e,
-								exam_name: o[y][c][e][g].exam_name,
+								code: e,
+								name: o[y][c][e][g].name,
 								grades: examStats
 							});
 						}

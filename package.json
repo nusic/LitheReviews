@@ -18,6 +18,7 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-session": "^1.11.3",
+    "iconv-lite": "^0.4.13",
     "jquery": "^2.1.4",
     "jsdom": "3.1.2",
     "mocha": "^2.3.3",
@@ -26,6 +27,7 @@
     "mongoose-findorcreate": "^0.1.2",
     "morgan": "~1.6.1",
     "node-uuid": "^1.4.3",
+    "request": "^2.65.0",
     "serve-favicon": "~2.3.0"
   }
 }

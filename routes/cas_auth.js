@@ -15,7 +15,7 @@ for (var k in interfaces) {
 
 var myIp = addresses[0];
 var myPort = 5000;
-var hostAddress = process.env.HOST_ADDR || (myIp + ':5000'); 
+var hostAddress = process.env.HOST_ADDR || (myIp + ':' + myPort); 
 
 console.log('hostAddress: ' + hostAddress);
 
@@ -43,7 +43,7 @@ exports.myValidate = function(req, res, next){
     next();
   }
   else {
-    return res.redirect('/login');    
+    return res.redirect('/login');
   }
 }
 

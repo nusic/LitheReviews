@@ -1,0 +1,13 @@
+HPPB15	0100	20020101	G 	Utvecklingspsykologiska avvikelser  10.5 hp	Tentamen  10.5 hp	28	12	Developmental Psychology and Deviations  10.5 Credits	Examination  10.5 Credits
+TDDB56	LAB1	20020101	G 	Algoritmer och optimering  9.0 hp	Laboration  3.0 hp	2	12	Algorithms and Optimization  9.0 Credits	Laboratory Work  3.0 Credits
+TGTU07	UPG2	20020101	G 	Kommunikation I  3.0 hp	Skriftliga och muntliga uppgifter  1.5 hp	1	12	Communication I  3.0 Credits	Written and Oral Exercise  1.5 Credits
+HFÖA42	0100	20020102	VG	Ekonomisk styrning och marknadsföring  7.5 hp	Tentamen  7.5 hp	5	18	Managerial Accounting and Marketing  7.5 Credits	Tentamen  7.5 Credits
+HIBB51	LABA	20020102	G 	Databaser och verktyg  15.0 hp	Java  7.5 hp	4	12	Databases and Tools  15.0 Credits	Java  7.5 Credits
+L9AA51	LÄ01	20020102	G 	Examensarbete i grundskollärarprogrammet  15.0 hp	Examensarbete  15.0 hp	1	12	Graduation Thesis with Relevance to the Teaching Profession, General Level  15.0 Credits	Graduation Thesis, general level  15.0 Credits
+LFAAB2	LÄ01	20020102	G 	Folkhögskollärarens arbetsuppgifter och yrkesroll  15.0 hp	Folkhögskollärarens arbetsuppgifter och yrkesroll  15.0 hp	1	12	The Folk High School Teacher as a Professional  15.0 Credits	The Folk High School Teacher as a Professional  15.0 Credits
+LLF050	TEOR	20020102	G 	Teoretisk kurs  31.5 hp	Teoretisk kurs  31.5 hp	1	12	Teoretisk kurs  31.5 Credits	Teoretisk kurs  31.5 Credits
+LLF060	PRAK	20020102	G 	Praktisk kurs  21.0 hp	Praktisk kurs  21.0 hp	1	12	Praktisk kurs  21.0 Credits	Examination  21.0 Credits
+LLF071	PRAK	20020102	G 	Förlängd praktisk kurs  7.5 hp	Förlängd praktisk kurs  7.5 hp	1	12	Förlängd praktisk kurs  7.5 Credits	Examination  7.5 Credits
+LUAA02	LÄ01	20020102	G 	Påbyggnadsutbildning till vuxenlärare  30.0 hp	Vuxenpedagogik  7.5 hp	1	12	Teaching in Adult Education, Extension Course  30.0 Credits	Examination  7.5 Credits
+NBXD21	EXAR	20020102	G 	Examensarbete  30.0 hp	Examensarbete (internt)  30.0 hp	1	12	Thesis  30.0 Credits	Thesis  30.0 Credits
+NOPPON	OPPO	20020102	D 	Opponering på examensarbete  0.0 hp	Opponering  0.0 hp	1	10	Opponering på examensarbete  0.0 Credits	Opponering  0.0 Credits

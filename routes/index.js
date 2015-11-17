@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var cas_login = require('./cas_auth');
-var liu = require('../lib/liu_exam_results');
+var liu_exam_data = require('../lib/liu_exam_results');
 
 // Home
 router.get('/', function(req, res, next) {
@@ -23,6 +23,7 @@ var mongoose = require('mongoose');
 var Course = mongoose.model('Course');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
+var ExamData = mongoose.model('ExamData');
 
 
 router.param('program', function(req, res, next, id){
@@ -95,19 +96,15 @@ router.get('/courses/:course', function(req, res, next){
 	}
 
 	if(req.course.exams){
-		liu.search(req.course, function (err, exams){
-			console.log('liu search returned')
-			if(err) {
-				console.error(err);
-			}
-
+		//liu_exam_data.search
+		ExamData.findByCourse(req.course, function (err, exams){
+			if (err) console.error(err);
 			req.course.exams = err ? err : exams;
-
 			populateReviewsAndSend(req, res);
 		});
-		console.log('called liu exam search');
 	}
-	else {
+	else{
+		console.log('No template :/');
 		populateReviewsAndSend(req, res);
 	}
 });

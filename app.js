@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 require('./models/Users');
 require('./models/Courses');
 require('./models/Reviews');
+require('./models/ExamData');
 var mongoose_url = 'mongodb://' + process.env.MONGOLAB_USER + 
     ':' + process.env.MONGOLAB_PW + '@ds043694.mongolab.com:43694/liureviews';
 mongoose.connect(mongoose_url);

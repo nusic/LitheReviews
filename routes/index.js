@@ -29,12 +29,10 @@ var ExamData = mongoose.model('ExamData');
 router.param('program', function(req, res, next, id){
 	Course.find({programs: id}, function(err, courses){
 		if(err) {
+			console.log('err:', err);
 			return next(err);
 		}
 
-		if(!courses || !courses.length){
-			return next(new Error('Cannot find courses that match program' + id));
-		}
 		req.program = id;
 		req.courses = courses;
 		return next();
@@ -42,7 +40,11 @@ router.param('program', function(req, res, next, id){
 });
 
 router.get('/program/:program', function(req, res, next){
-	return res.json(req.courses);
+	var outData = req.courses;
+	if(!outData){
+		outData = [{code: 'Error', title: 'No courses found'}];
+	}
+	return res.json(outData);
 });
 
 

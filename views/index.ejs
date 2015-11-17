@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Liu Reviews </title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -12,49 +12,58 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="angularApp.js"></script>
+    <script src="angularApp.js"></script>
 
-		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
+    <style> .glyphicon-thumbs-up { cursor:pointer } </style>
   </head>
 
   <body ng-app="myApp">
-  	<div class="row">
-  		<div class="col-md-8 col-md-offset-2">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
         <app-header></app-header>
-        <ui-view></ui-view>
-  		</div>
-  	</div>
+        <div id="content-wrapper">
+          <ui-view></ui-view>  
+        </div>
+      </div>
+    </div>
 
     <!-- PROGRAMS template -->
     <script type="text/ng-template" id="/index.html">
-      <a ng-repeat="program in programs | orderBy: +program" href="#/program/{{program}}">
-        <h4>{{program}}</h4>
-      </a>
-    </script>    
+      <div ng-repeat="programCategory in programsByType">
+        <h4>{{programCategory.type}}</h4>
+        <a ng-repeat="program in programCategory.programs" href="#/program/{{program.code}}">
+          <p>{{program.name}} ({{program.code}})</p>
+        </a>
+        <br />
+      </div>
+    </script>
 
     <!-- PROGRAM COURSE LIST template -->
     <script type="text/ng-template" id="/program.html">
-    	<div ng-repeat="course in courses | orderBy: '+period'" style="padding: 5px; margin-bottom: 5px;">
-    		<a href="#/courses/{{course._id}}">
-	    		<span style="font-size:20px; margin-left:10px; margin-top: 15px;">
-	    			{{course.code}}
-	    		</span>
-          <p style="font-size:15px; margin-left:10px;">
-            {{course.title}}
+      <p ng-hide="courses.length > 0">
+        No courses available :/
+      </p>
+
+
+      <p ng-show="courses.length > 0">
+        <span style="color: #ccc;"> Sök: </span>
+        <input ng-model="searchText" /> 
+        <span style="color: #ccc;"> kurskod, namn, examinator, period (6vt, 7ht2)</span>
+      </p>
+      <br />
+
+      <div ng-repeat="course in courses | filter:searchText | orderBy: '+period'" class="course-item year{{course.period.charAt(0)}}">
+        <a href="#/courses/{{course._id}}">
+          <p>
+            {{course.code}} - {{course.title}}
           </p>
-          <p class="text-right" style="margin-top: -45px;font-size:17px;" ng-show="course.satisfactionPercentage !== undefined">
-            <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;" />
-            <span style="color: #2c2;">
-              {{course.satisfactionPercentage}}%
-            </span>
+          <p class="text-right" style="margin-top: -30px;" ng-show="course.satisfactionPercentage !== undefined">
+            <img ng-src="imgs/icon_happy.png" width="15px;" style="margin-top: -3px;"/>
+            <span style="color: #2c2;">{{course.satisfactionPercentage}}%</span>
+            <span style="color: #ccc;">({{course.reviews.length}} review{{course.reviews.length > 1 ? 's' : ''}})</span>
           </p>
-          <p class="text-right" style="margin-top: -10px;" ng-show="course.reviews.length > 0">
-          <small>
-            {{course.reviews.length}} review{{course.reviews.length > 1 ? 's' : ''}}
-          </small>
-          </p>
-				</a>
-    	</div>
+        </a>
+      </div>
     </script>
 
 
@@ -63,6 +72,13 @@
       <h3>{{course.code}}, {{course.year}}</h3>
       <h4>{{course.title}}</h4>
       <small>
+        Period: {{course.period}},
+        Block: {{course.block}},
+        Nivå: {{course.level}}, 
+        Omfattning: {{course.hp}}hp
+        <br />
+      </small>
+      <small>
         Examinator: {{course.prof}} |
         <a href="http://kdb-5.liu.se/liu/lith/studiehandboken/svkursplan.lasso?&k_budget_year={{course.year}}&k_kurskod={{course.code}}" 
           target="_blank">Studiehandboken</a>,
@@ -70,14 +86,6 @@
         >
         Kurssida
         </a>
-      </small>
-
-      <small ng-show="course.block !== '-' && false">
-        <br />
-        Period: {{course.period}},
-        Block: {{course.block}},
-        Nivå: {{course.level}}, 
-        Omfattning: {{course.hp}}hp,
       </small>
 
       <div ng-show="course.satisfactionPercentage !== undefined" style="margin-top: 10px;"> 

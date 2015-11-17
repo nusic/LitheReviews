@@ -1,7 +1,4 @@
-angular.module('myApp').controller('MainController',[
-  '$scope',
-  function ($scope){
-  	$scope.programsByType = [
+[
 	{
 		"type": "Civilingenjörsutbildning",
 		"programs": [
@@ -126,7 +123,7 @@ angular.module('myApp').controller('MainController',[
 			}
 		]
 	},
-	/*
+
 	{
 		"type": "Carl Malmsten: Design- och hantverksutbildningar",
 		"programs": [
@@ -148,7 +145,7 @@ angular.module('myApp').controller('MainController',[
 			},
 		]
 	},
-	*/
+
 	{
 		"type": "Övriga kandidatprogram",
 		"programs": [
@@ -280,7 +277,7 @@ angular.module('myApp').controller('MainController',[
 			},
 		]
 	},
-	/*
+	
 	{
 		"type": "Behörighetsgivande utbildning",
 		"programs": [
@@ -305,7 +302,4 @@ angular.module('myApp').controller('MainController',[
 			}
 		]
 	}
-	*/
 ]
-  }
-]);

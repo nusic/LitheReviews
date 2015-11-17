@@ -1,5 +1,6 @@
 body {
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -26,6 +27,38 @@ h3{
 h1{
 	margin-bottom: 0px;
 }
+
+#content-wrapper{
+	margin: 20px;
+}
+
+
+/*
+ *	Course list
+ */
+
+.course-item{
+	margin: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.year7{
+	background: #fafafa;
+}
+.year8{
+	background: #fafafa;
+}
+.year9{
+	background: #fafafa;
+}
+.year10{
+	background: #fafafa;
+}
+
+
+
+
 
 .clickable:hover {
 	cursor: pointer;

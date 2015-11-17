@@ -44,9 +44,9 @@ ExamDataSchema.statics.findByCourse = function(course, callback){
 							return;
 						}
 						found = true;
-						templateData.freq = data.freq;
 					});
 					if(!found){
+					
 						exam.grades.splice(index, 0, {
 							grade: templateData.grade,
 							freq: 0

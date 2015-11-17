@@ -71,6 +71,7 @@ angular.module('myApp').controller('MainController',[
 			}
 		]
 	},
+	/*
 	{
 	"type": "Högskoleingenjörsutbildning",
 		"programs": [
@@ -96,7 +97,7 @@ angular.module('myApp').controller('MainController',[
 			}
 		]
 	},
-
+	*/
 	{
 		"type": "Matematisk-naturvetenkaplig och datavetenskaplig kandidatutbildning",
 		"programs": [

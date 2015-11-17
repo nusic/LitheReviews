@@ -54,13 +54,15 @@ angular.module('myApp').factory('courses', ['$http', function($http){
 
     //give score
     examStatsJSON.forEach(function (exam, i){
-      examStatsJSON[i].score = exam.stats.length;
+      examStatsJSON[i].score = exam.grades.length;
       var numDifferentGrades = 0;
-      exam.stats.forEach(function(d){
+      var numStudentsTookExam = 0;
+      exam.grades.forEach(function(d){
+        numStudentsTookExam += d.freq;
         numDifferentGrades += +(d.freq > 0);
       });
       examStatsJSON[i].score += numDifferentGrades;
-      examStatsJSON[i].score += 0.5*Math.log(exam.total);
+      examStatsJSON[i].score += 0.5*Math.log(numStudentsTookExam);
     });
 
     examStatsJSON = examStatsJSON.sort(function(e1, e2){

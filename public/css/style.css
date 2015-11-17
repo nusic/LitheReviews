@@ -38,24 +38,13 @@ h1{
  */
 
 .course-item{
-	margin: 0px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.year7{
+.year7, .year8, .year9, .year10{
 	background: #fafafa;
 }
-.year8{
-	background: #fafafa;
-}
-.year9{
-	background: #fafafa;
-}
-.year10{
-	background: #fafafa;
-}
-
 
 
 

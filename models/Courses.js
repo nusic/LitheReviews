@@ -10,6 +10,7 @@ var CourseSchema = new mongoose.Schema({
 	block: String,
 	hp: Number,
 	site: String,
+	vof: String, // v: valbar, o: obligatorisk
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 	programs: [String]

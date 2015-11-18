@@ -12,6 +12,14 @@ angular.module('myApp').factory('courses', ['$http', function($http){
 
   o.getForProgram = function(program){
     return $http.get('/program/' + program).then(function(res){
+      res.data.forEach(function (course){
+        var searchable_v = "";
+        if(course.vof.indexOf('v') !== -1) searchable_v += 'valbar ';
+        if(course.vof.indexOf('o') !== -1) searchable_v += 'obligatorisk ';
+        if(course.vof.indexOf('f') !== -1) searchable_v += 'valbar '; // Annars clash med 'frivillig kontrollskrivning'
+        course.vof = searchable_v;
+        console.log(course.code, course.vof);
+      })
       angular.copy(res.data, o.courses);
     });
   }

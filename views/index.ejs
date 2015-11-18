@@ -46,19 +46,22 @@
 
 
       <p ng-show="courses.length > 0">
-        <span style="color: #ccc;">Sök: </span>
-        <input ng-model="searchText" /> 
-        <span style="color: #ccc;"> kurs, examinator, period (t ex 7ht2)</span>
+        <span>Sök: </span>
+        <input ng-model="searchText" />
+        <br />
+        <small id="search_help">
+          Du kan söka på kurs, examinator, period (t ex: 7ht2), "valbar" eller "obligatorisk"
+        </small>
       </p>
       <br />
 
-      <div ng-repeat="course in courses | filter:searchText | orderBy: '+period'" class="course-item year{{course.period.charAt(0)}}">
+      <div ng-repeat="course in courses | filter:searchText | orderBy: '+period'" class="course-item {{course.vof}}">
         <a href="#/courses/{{course._id}}">
           <p>
             {{course.code}} - {{course.title}}
           </p>
-          <p class="text-right" style="margin-top: -30px;" ng-show="course.satisfactionPercentage !== undefined">
-            <img ng-src="imgs/icon_happy.png" width="15px;" style="margin-top: -3px;"/>
+          <p class="text-right" style="margin-top: -26px;" ng-show="course.satisfactionPercentage !== undefined">
+            <img ng-src="imgs/icon_happy.png" width="14px;" style="margin-top: -4px;"/>
             <span style="color: #2c2;">{{course.satisfactionPercentage}}%</span>
             <span style="color: #ccc;">({{course.reviews.length}} review{{course.reviews.length > 1 ? 's' : ''}})</span>
           </p>

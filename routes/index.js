@@ -33,6 +33,11 @@ router.param('program', function(req, res, next, id){
 			return next(err);
 		}
 
+		if(!courses || !courses.length){
+			console.log('didnt find courses for ' + id);	
+		}
+		
+
 		req.program = id;
 		req.courses = courses;
 		return next();

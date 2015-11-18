@@ -41,7 +41,8 @@
     <!-- PROGRAM COURSE LIST template -->
     <script type="text/ng-template" id="/program.html">
       <p ng-hide="courses.length > 0">
-        Det fanns inga kurser för {{program}} ... 
+        Det fanns inga kurser för {{program}} nuvarande år enligt
+        <a href="{{courses_url}}" target="_blank">studiehandboken</a>
       </p>
 
 
@@ -75,10 +76,12 @@
       <h3>{{course.code}}, {{course.year}}</h3>
       <h4>{{course.title}}</h4>
       <small>
-        Period: {{course.period}},
-        Block: {{course.block}},
-        Nivå: {{course.level}}, 
-        Omfattning: {{course.hp}}hp
+        Period: {{course.period}} |
+        Block: {{course.block}} |
+        Nivå: {{course.level}} | 
+        Omfattning: {{course.hp}}hp |
+        Ges för:
+        <span ng-repeat="p in course.programs">{{p}}{{$last ? '' : ','}}</span>
         <br />
       </small>
       <small>

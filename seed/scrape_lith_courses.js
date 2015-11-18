@@ -9,155 +9,68 @@ var year = 2015;
 
 var outputFile = 'all_lith_courses_'+year+'.json';
 
+require('../lib/batched_for_each.js');
 
-function shallow_scrape_program_courses(query, callback){
-	console.log('Scraping courses from ' + query.programs.length + ' programs')
-	//Maps course codes to full courses
-	var courseCodeToCourse = {};
-	var responseCounter = 0;
+var lithe_test_programs = ['MT', 'Y', 'ED'];
+var programs = lith_programs;
+var courseCodeToCourse = {};
 
-	query.programs.forEach(function(program){
-		var courseQuery = {program: program, year: query.year};
-		liu_courses.search(courseQuery, function(err, courses){
-			if(err) return console.error(err);
-				
-			responseCounter++;
-			console.log('  ' + responseCounter + '/' + query.programs.length + ': ' + program + ' -> ' + courses.length + ' courses');
+programs.batchedForEach(10, perProgramFn, onPerProgramDone)
 
-			// Add course to map
-			courses.forEach(function (course){
-				if(!courseCodeToCourse[course.code]){
-					course.programs = [program];
-					courseCodeToCourse[course.code] = course;
-				}
-				else{
-					courseCodeToCourse[course.code].programs.push(program);	
-				}
-			});
+function perProgramFn(program, programIndex, callback){
+	var courseQuery = {program: program, year: year};
+	liu_courses.search(courseQuery, function(err, courses){
+		if(err) console.error(err);
 
-			if(responseCounter === query.programs.length){
-				//Convert courseCodeToCourse to array
-				var courses = Object.keys(courseCodeToCourse).map(function (key) {
-					return courseCodeToCourse[key];
-				});
-				callback(null, courses);
+		console.log('  ' + programIndex + '/' + programs.length + ': ' + program + ' -> ' + courses.length + ' courses');
+
+		// Add course to map
+		courses.forEach(function (course){
+			if(!courseCodeToCourse[course.code]){
+				course.programs = [program];
+				courseCodeToCourse[course.code] = course;
 			}
-		});
-	});
-}
-
-var simple_query = {
-	programs: ['MT', 'ED'],
-	year: 2015
-};
-
-var full_query = {
-	programs: lith_programs,
-	year: 2015
-};
-
-shallow_scrape_program_courses(full_query, function (err, courses){
-	console.log('Found ' + courses.length + ' unique courses');
-
-
-	console.log('Scraping course info for each course');
-	var allCoursesFullInfo = [];
-	var batchSize = 50;
-	var numBatches = Math.ceil(courses.length/batchSize);
-	var batchIndex = 0;
-	
-	function recursiveScrape(courses){
-		var from = batchIndex*batchSize;
-		var to = Math.min(from + batchSize, courses.length);
-		console.log('Scraping batch ' + batchIndex + ' from ' + from + ' to ' + to);
-		var batch = courses.slice(from, to);
-
-		scrapeCourseInfo(batch, function (err, coursesFullInfo){
-			batchIndex++;
-			coursesFullInfo.forEach(function(courseFullInfo){
-				allCoursesFullInfo.push(courseFullInfo);
-			});
-			if(batchIndex === numBatches){
-				onScrapeDone(null, allCoursesFullInfo);
-			} 
 			else{
-				recursiveScrape(courses);
+				courseCodeToCourse[course.code].programs.push(program);	
 			}
 		});
-	}
-
-
-	function scrapeCourseInfo(courses, callback){
-		var numCourseInfoScraped = 0;
-		var coursesFullInfo = [];
-		courses.forEach(function(course, i){
-			(function (courseIndex){
-				liu_course_info.search(course, function (err, courseFullInfo){
-					numCourseInfoScraped++;
-
-					if(err) {
-						console.log(numCourseInfoScraped + '/' + courses.length + ': ' + err);
-					}
-					
-					coursesFullInfo[courseIndex] = courseFullInfo;
-					console.log(numCourseInfoScraped + '/' + courses.length + ': ' + course.code + " - " + course.title);	
-					
-					if(numCourseInfoScraped === courses.length){
-						callback(null, coursesFullInfo);
-					}
-				});
-			})(i)
-		});
-	}
-
-	recursiveScrape(courses);
-	
-});
-
-
-/*
-
-var courseArray = [];
-var numCourses = -1;
-var numCourseInfoScraped = 0;
-
-liu_courses.search(query, function (err, courses){
-	if(err) return console.error(err);
-
-	numCourses = courses.length;
-	console.log("Found " + numCourses + " courses. Scraping course info ..");
-
-	courses.forEach(function(course, i){
-
-		(function (courseIndex){
-			liu_course_info.search(course, function (err, course){
-				if(err) return console.error(err);
-
-				courseArray[courseIndex] = course;
-				numCourseInfoScraped++;
-
-				console.log(numCourseInfoScraped + '/' + numCourses + ': ' + course.code + " - " + course.title);
-
-				if(numCourseInfoScraped === numCourses){
-					onDone();
-				}
-			});
-		})(i)
-	});
-});*/
-
-function onScrapeDone(err, coursesFullInfo){
-	console.log('Done scraping');
-	
-	console.log('saving to ' + outputFile);
-	var jsonStr = JSON.stringify(coursesFullInfo, null, 2);
-
-	fs.writeFile(outputFile, jsonStr, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-
-    console.log("File saved");
+		callback();
 	});
 }
 
+function onPerProgramDone(){
+	var courses = Object.keys(courseCodeToCourse).map(function (key) {
+		return courseCodeToCourse[key];
+	});
+
+	var coursesFullInfo = [];
+	courses.batchedForEach(10, perCourseFn, perCourseOnDone);
+
+	function perCourseFn(course, courseIndex, callback){
+		liu_course_info.search(course, function (err, courseFullInfo){
+			if(err) {
+				console.log(courseIndex + '/' + courses.length + ': ' + err);
+			}
+
+			coursesFullInfo[courseIndex] = courseFullInfo;
+			console.log(courseIndex + '/' + courses.length + ': ' + course.code + " - " + course.title);
+
+			callback();
+		});
+	}
+
+	function perCourseOnDone(){
+		console.log('Done scraping');
+
+		console.log('saving to ' + outputFile);
+		var jsonStr = JSON.stringify(coursesFullInfo, null, 2);
+
+		fs.writeFile(outputFile, jsonStr, function(err) {
+			if(err) {
+				return console.log(err);
+			}
+
+			console.log("File saved");
+		});
+	}
+}

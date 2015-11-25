@@ -17,17 +17,17 @@ var courseArray = [];
 var numCourses = -1;
 var numCourseInfoScraped = 0;
 
-liu_courses.search(query, function (err, courses){
-	if(err) return console.error(err);
+liu_courses.search(query)
+.then(function (courses){
 
 	numCourses = courses.length;
 	console.log("Found " + numCourses + " courses. Scraping course info ..");
 
-	courses.forEach(function(course, i){
+	courses.forEach(function (course, i){
 
 		(function (courseIndex){
-			liu_course_info.search(course, function (err, course){
-				if(err) return console.error(err);
+			liu_course_info.search(course)
+			.then(function (course){
 
 				courseArray[courseIndex] = course;
 				numCourseInfoScraped++;

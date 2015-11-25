@@ -1,4 +1,3 @@
-<div class="btn-group">
 <label class="btn btn-success">
   <input type="radio" class="ng-hide" ng-model="reviewType" ng-click="goToInput()" value="+">
     &nbsp;&nbsp;Lägg till något som du gillade&nbsp;&nbsp;&nbsp;
@@ -9,7 +8,6 @@
     Lägg till något som kan bli bättre
   </input>
 </label>
-</div>
 
 <form ng-hide="reviewType === undefined" ng-submit="addReview()" style="margin-top:30px;">
   <div class="form-group">
@@ -23,6 +21,6 @@
   </div>
 
   <button type="submit" class="btn btn-{{reviewType == '+' ? 'success' : 'danger'}}" >
-    Skicka {{reviewType == '+' ? ':)' : ':('}}
+    Skicka
   </button>
 </form>

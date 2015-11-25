@@ -18,38 +18,30 @@ router.get('/login', function(req, res, next){
 	cas_login.cas_login(req, res, next);
 });
 
-
 var mongoose = require('mongoose');
 var Course = mongoose.model('Course');
+var Program = mongoose.model('Program');
 var Review = mongoose.model('Review');
 var User = mongoose.model('User');
 var ExamData = mongoose.model('ExamData');
 
 
 router.param('program', function(req, res, next, id){
-	Course.find({programs: id}, function(err, courses){
-		if(err) {
-			console.log('err:', err);
-			return next(err);
-		}
+	req.program = id;
+	Program.findOne({code: id, year: 2015}, function (err, program){
+		if(err) return next(err);
 
-		if(!courses || !courses.length){
-			console.log('didnt find courses for ' + id);	
-		}
-		
-
-		req.program = id;
-		req.courses = courses;
-		return next();
+		req.program = program;
+		next();
 	});
 });
 
 router.get('/program/:program', function(req, res, next){
-	var outData = req.courses;
-	if(!outData){
-		outData = [{code: 'Error', title: 'No courses found'}];
-	}
-	return res.json(outData);
+	Course.findForProgram(req.program, function (err, courses){
+		if(err) return next(err);
+
+		res.json(courses);
+	});
 });
 
 
@@ -61,15 +53,6 @@ router.get('/courses', function(req, res, next){
 			return next(err);
 		}
 		res.json(courses);
-	});
-});
-
-router.post('/courses', function(req, res, next){
-	var course = new Course(req.query);
-
-	course.save(function(err, course){
-		if(err) return next(err);
-		res.json(course);
 	});
 });
 
@@ -85,6 +68,45 @@ router.param('course', function(req, res, next, id){
 		req.course = course;
 		return next();
 	});
+});
+
+router.get('/program/:program/course/:course', function (req, res, next){	
+
+	function populateReviewsAndSend(req, res){
+		req.course.populate('reviews', function(err, course){
+			if(err) return next(err);
+
+			User.findOrCreate({liuId: req.session.liuId}, function(err, user){
+				if(err) return next(err);
+
+				var courseObject = course.toObject();
+				courseObject.reviews = course.markVotedComments(user);
+
+
+				if(req.program.courseMap){
+					var programSpecific = req.program.courseMap[course.code];
+					Object.keys(programSpecific).forEach(function (key){
+						courseObject[key] = programSpecific[key];
+					});
+				}
+
+				res.json(courseObject);
+			});
+		});
+	}
+
+	if(req.course.exams){
+		//liu_exam_data.search
+		ExamData.findByCourse(req.course, function (err, exams){
+			if (err) console.error(err);
+			req.course.exams = err ? err : exams;
+			populateReviewsAndSend(req, res);
+		});
+	}
+	else{
+		console.log('No template :/');
+		populateReviewsAndSend(req, res);
+	}
 });
 
 router.get('/courses/:course', function(req, res, next){

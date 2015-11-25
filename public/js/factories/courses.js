@@ -11,21 +11,21 @@ angular.module('myApp').factory('courses', ['$http', function($http){
   };
 
   o.getForProgram = function(program){
-    return $http.get('/program/' + program).then(function(res){
+    return $http.get('/program/' + program).then(function (res){
+
       res.data.forEach(function (course){
         var searchable_v = "";
         if(course.vof.indexOf('v') !== -1) searchable_v += 'valbar ';
         if(course.vof.indexOf('o') !== -1) searchable_v += 'obligatorisk ';
         if(course.vof.indexOf('f') !== -1) searchable_v += 'valbar '; // Annars clash med 'frivillig kontrollskrivning'
         course.vof = searchable_v;
-        console.log(course.code, course.vof);
       })
       angular.copy(res.data, o.courses);
     });
   }
 
-  o.get = function(id){
-    return $http.get('/courses/' + id).then(function(res){
+  o.get = function(programCode, id){
+    return $http.get('program/' + programCode + '/course/' + id).then(function(res){
       res.data.exams = setPotentialGraphHides(res.data.exams);
       return res.data;
     });

@@ -25,12 +25,12 @@ function ($stateProvider, $urlRouterProvider, $locationProvider) {
   })
 
   .state('courses', {
-    url: '/courses/{id}',
+    url: '/program/{program}/course/{id}',
     templateUrl: '/courses.html',
     controller: 'CourseController',
     resolve: {
       course: ['$stateParams', 'courses', function ($stateParams, courses){
-        return courses.get($stateParams.id);
+        return courses.get($stateParams.program, $stateParams.id);
       }]
     }
   })

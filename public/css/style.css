@@ -15,16 +15,27 @@ a:hover{
 	text-decoration: none;
 }
 
+a#home-link:hover{
+	color: #333;
+	opacity: 0.6;
+}
+
+.spy-img{
+	margin-top: -25px;
+}
+
 small a{
 	color: lightgray; 
 	text-decoration: underline;
 }
 
+
+
 h3{
 	margin-top: 0px;
 }
 
-h1{
+.page-header{
 	margin-bottom: 0px;
 }
 
@@ -43,14 +54,8 @@ h1{
 }
 
 
-
-
 .clickable:hover {
 	cursor: pointer;
-}
-
-.spy-img{
-	margin-top: -25px;
 }
 
 .upvote{

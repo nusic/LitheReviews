@@ -4,34 +4,41 @@ var liu_courses = require('../lib/liu_courses.js');
 var liu_course_info = require('../lib/liu_course_info.js');
 
 //http://www.lith.liu.se/sh/forkortningar.html
-var lith_programs = ['ACG', 'AER', 'APB', 'ASIENJ', 'ASIENK', 'Bas', 'X', 'BasT', 'BasTC', 'BI', 'Bio', 'BKM', 'BME', 'C', 'CII', 'DE', 'GI', 'KO', 'SN', 'TA', 'COE', 'COM', 'COS', 'CS', 'D', 'DAV', 'DE', 'DI', 'DPU', 'ECO', 'ED', 'EI', 'EL', 'ELE', 'EM', 'ENG', 'ENV', 'ERG', 'ES', 'ETH', 'FL', 'FORE', 'FRIST', 'FT', 'FyN', 'Fys', 'GDK', 'HU', 'I', 'IE', 'Ii', 'IMM', 'IND', 'INN', 'IP', 'IT', 'ITS', 'Jap', 'KA', 'KBI', 'KeBi', 'Kem', 'KI', 'KOS', 'KTS', 'LOG', 'M', 'Mat', 'MEC', 'MED', 'MES', 'MFYS', 'MI', 'MK', 'MMAT', 'MOL', 'MPN', 'MSK', 'MSN', 'MT', 'MuP', 'NO', 'OI', 'PRO', 'SEM', 'SL', 'SOC', 'SUS', 'SY', 'TB', 'TES', 'TL', 'TSL', 'U', 'WNE', 'X', 'XACG', 'XSY', 'Y', 'YDT', 'YH', 'Yi', 'YMP', 'YTHele', 'YTHträ'];
 var year = 2015;
 
-var outputFile = 'all_lith_courses_'+year+'.json';
+//var outputFile = 'all_lith_courses_'+year+'.json';
+var outputFile = 'MT_CS_courses_'+year+'.json';
 
 require('../lib/batched_for_each.js');
 
-var lithe_test_programs = ['MT', 'Y', 'ED'];
-var programs = lith_programs;
+var lithe_test_programs = [{code: 'MT'}, {code: 'CS'}];
+var programs = lithe_test_programs;
 var courseCodeToCourse = {};
 
 programs.batchedForEach(10, perProgramFn, onPerProgramDone)
 
 function perProgramFn(program, programIndex, callback){
-	var courseQuery = {program: program, year: year};
+	var courseQuery = {program: program.code, year: year};
 	liu_courses.search(courseQuery, function(err, courses){
 		if(err) console.error(err);
 
-		console.log('  ' + programIndex + '/' + programs.length + ': ' + program + ' -> ' + courses.length + ' courses');
+		console.log('  ' + programIndex + '/' + programs.length + ': ' + program.code + ' -> ' + courses.length + ' courses');
 
 		// Add course to map
 		courses.forEach(function (course){
+			// Add program specific
+			if(!program.specific) program.specific = {};
+			if(!program.specific[course.code]) program.specific[course.code] = {};
+			program.specific[course.code].period = course.period;
+
+
+			// Add course
 			if(!courseCodeToCourse[course.code]){
-				course.programs = [program];
+				course.programs = [program.code];
 				courseCodeToCourse[course.code] = course;
 			}
 			else{
-				courseCodeToCourse[course.code].programs.push(program);	
+				courseCodeToCourse[course.code].programs.push(program.code);
 			}
 		});
 		callback();
@@ -39,7 +46,13 @@ function perProgramFn(program, programIndex, callback){
 }
 
 function onPerProgramDone(){
+
+	//console.log(JSON.stringify(programs));
+	console.log('stopping to prevent DOS');
+
+	return;
 	var courses = Object.keys(courseCodeToCourse).map(function (key) {
+		delete courseCodeToCourse[key].period;
 		return courseCodeToCourse[key];
 	});
 

@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 require('./models/Users');
 require('./models/Courses');
+require('./models/Programs');
 require('./models/Reviews');
 require('./models/ExamData');
 var mongoose_url = 'mongodb://' + process.env.MONGOLAB_USER + 

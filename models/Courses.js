@@ -6,11 +6,11 @@ var CourseSchema = new mongoose.Schema({
 	year: Number,
 	prof: String,
 	satisfactionPercentage: Number,
-	period: String,
+	//period: String,
 	block: String,
 	hp: Number,
 	site: String,
-	vof: String, // v: valbar, o: obligatorisk
+	//vof: String, // v: valbar, o: obligatorisk
 	exams: [],
 	reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 	programs: [String]
@@ -50,6 +50,29 @@ CourseSchema.methods.markVotedComments = function(user){
 		markedReviews.push(markedReview);
 	};
 	return markedReviews
+}
+
+CourseSchema.statics.findForProgram = function(program, cb){
+	var query = {programs: program.code, year: program.year};
+	console.log(query);
+
+	this.find(query).lean().exec(function (err, courses){
+		if(err) return cb(err);
+		if(!program.courseMap) {
+			console.log('no courseMap for ' + program.code);
+			return cb(null, courses);
+		}
+
+		courses.forEach(function (course){
+			var programSpecific = program.courseMap[course.code];
+
+			Object.keys(programSpecific).forEach(function (key){
+				course[key] = programSpecific[key];
+			});
+		});
+
+		cb(null, courses); 		
+	});
 }
 
 mongoose.model('Course', CourseSchema);

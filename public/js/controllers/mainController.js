@@ -235,11 +235,10 @@ function getPrograms(){
         "name": "Wireless Networks and Electronics"
       }
     ]
-  }
-];
+  },
 	
 		/*
-		{
+	{
 		"type": "Högskoleingenjörsutbildning",
 			"programs": [
 				{
@@ -264,7 +263,7 @@ function getPrograms(){
 				}
 			]
 		},
-		*/
+		
 		
 		/*
 		{
@@ -316,6 +315,7 @@ function getPrograms(){
 			]
 		}
 		*/
+  ];
 }
 
 

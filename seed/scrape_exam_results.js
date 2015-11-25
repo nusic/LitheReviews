@@ -1,39 +1,43 @@
 var fs = require('fs');
 
+function read(fileName){
+	var promise = new Promise(function (resolve, reject){
+
+		fs.readFile(fileName, 'utf8', function (err,data) {
+			if(err) return reject(err);
+
+			resolve(data);
+		});
+	});
+	return promise;
+}
+
 var liu_exam_results = require('../lib/liu_exam_results.js');
 require('../lib/batched_for_each.js');
 
-var fileName = 'scrapes/all_lith_courses_2015.json';
+var fileName = 'scrapes/some_MT_courses.json';
+var courses
+
+// Read file with courses
+read(fileName)
 
 
-fs.readFile(fileName, 'utf8', function (err,data) {
-	if(err) return console.error(err);
+// Get exam data for all courses
+.then(function (data){
+	courses = JSON.parse(data);
 
-	var courses = JSON.parse(data);
-	var allExamResults = new Array(courses.length);
-
-	function fn(course, index, callback){
-		liu_exam_results.search(course, function (err, examResults){
-			console.log(index + '. ' + course.code + ' - ' + examResults.length + ' exams');
-			allExamResults[index] = examResults;
-			callback();
+	return courses.batchedForEach(30, function (course, index, done){
+		course.exams = [];
+		liu_exam_results.search(course).then(function (examResults){
+			course.exams.push(examResults);
+			done();
 		});
-	}
+	});
+})
 
-	function onDone(){
-		console.log('done');
-		console.log(allExamResults);
-	}
-
-	//courses.batchedForEach(30, fn, onDone);
-
-	courses.batchedForEach(100, function (course, index, callback){
-		liu_exam_results.search(course, function (err, examResults){
-			if(!err) allExamResults[index] = examResults;
-			console.log(index + '. ' + course.code + ' - ' + examResults.length + ' exams');
-			callback();
-		});	
-	}, function(){
-		console.log('done');
-	})
-});
+// All done
+.then(function(){
+	courses.forEach(function (course){
+		console.log(course);
+	});
+})

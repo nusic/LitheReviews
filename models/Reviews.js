@@ -4,6 +4,7 @@ var ReviewSchema = new mongoose.Schema({
 	body: String,
 	upvotes: {type: Number, default: 0},
 	positive: Boolean,
+	date: { type: Date, default: Date.now },
 	//author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 });
 

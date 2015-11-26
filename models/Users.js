@@ -3,7 +3,8 @@ var findOrCreate = require('mongoose-findorcreate');
 
 var UserSchema = new mongoose.Schema({
 	liuId: {type: String, unique: true, required: true, dropDups: true},
-	upvoteReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+	upvoteReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+	date: { type: Date, default: Date.now },
 });
 
 UserSchema.plugin(findOrCreate);

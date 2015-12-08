@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Liu Reviews </title>
+    <title>LiTHe Reviews </title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -76,8 +76,21 @@
 
     <!-- COURSE template -->
     <script type="text/ng-template" id="/courses.html">
-      <h3>{{course.code}}, {{course.year}}</h3>
-      <h4>{{course.title}}</h4>
+      <h4>{{course.code}} - {{course.title}} ({{course.year}})</h4>
+      
+
+      <div ng-show="course.satisfactionPercentage !== undefined" style="margin-top: 10px; margin-bottom: 10px"> 
+        <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
+          <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;" />
+          {{course.satisfactionPercentage}}%
+        </span>
+        
+        <span style="color: #c22; font-size: 20px">
+          <img ng-src="imgs/icon_sad.png" width="20px;" style="margin-top: -5px;" />
+          {{100 - course.satisfactionPercentage}}%
+        </span>
+      </div>
+
       <small>
         Period: {{course.period}} |
         Block: {{course.block}} |
@@ -96,19 +109,6 @@
         Kurssida
         </a>
       </small>
-
-      <div ng-show="course.satisfactionPercentage !== undefined" style="margin-top: 10px;"> 
-        <span style="color: #2c2; font-size: 20px; margin-right: 20px;">
-          <img ng-src="imgs/icon_happy.png" width="20px;" style="margin-top: -5px;" />
-          {{course.satisfactionPercentage}}%
-        </span>
-        
-        <span style="color: #c22; font-size: 20px">
-          <img ng-src="imgs/icon_sad.png" width="20px;" style="margin-top: -5px;" />
-          {{100 - course.satisfactionPercentage}}%
-        </span>
-      </div>
-
       <div id="statsContainer" style="margin-top: 30px;">
         <div ng-repeat="exam in course.exams" class="chart"
             title="Betyg som registrerats år {{course.year}}, inkl. omtentor etc.">

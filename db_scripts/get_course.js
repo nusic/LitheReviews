@@ -21,15 +21,37 @@ if(process.argv.length < 3){
   return;
 }
 
+
 // Load mongoose
 var mongoose = require('mongoose');
-
 // Load mongoose models that we will work with
 require('../models/Courses');
 require('../models/Reviews');
-
 // Get mongoose interface for the collection that we will query
 var Course = mongoose.model('Course');
+
+
+
+// Get the query data
+var courseCode = process.argv[2].toUpperCase();
+var courseYear = process.argv[3] ? Number(process.argv[3]) : undefined;
+var query = {};
+query.code = courseCode;
+if(courseYear) query.year = courseYear;
+
+
+// Function to call when an error has occured
+function handleError(err){
+  console.error(err);
+  mongoose.disconnect();
+}
+
+// Function to call when we have our data base results
+function handleSuccess(courseWithReviews){
+  courseWithReviews.exams = undefined; // Don't print "exams"
+  console.log(JSON.stringify(courseWithReviews, null, 2));
+  mongoose.disconnect();
+}
 
 // Build mongoose url string
 var mongoose_url = 'mongodb://' + 
@@ -38,27 +60,7 @@ var mongoose_url = 'mongodb://' +
 
 // Connect to the data base
 mongoose.connect(mongoose_url, function (err){
-
-  // Function to call when an error has occured
-  function handleError(err){
-    console.error(err);
-    mongoose.disconnect();
-  }
-
-  // Function to call when we have our results
-  function handleSuccess(courseWithReviews){
-    courseWithReviews.exams = undefined; // Don't print "exams"
-    console.log(JSON.stringify(courseWithReviews, null, 2));
-    mongoose.disconnect();
-  }
-
-  // Get the query data
-  var courseCode = process.argv[2].toUpperCase();
-  var courseYear = process.argv[3] ? Number(process.argv[3]) : undefined;
-
-  var query = {};
-  query.code = courseCode;
-  if(courseYear) query.year = courseYear;
+  if(err) return handleError(err);
 
   // Query the data base
   Course.findOne(query).sort('-year').exec(function (err, course){

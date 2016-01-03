@@ -72,6 +72,9 @@ function importToMongoDB(jsonObjects, done){
 			});
 		}
 		
+		if(!jsonObjectsToInsert.length){
+			return onError('No data to insert');
+		}
 
 		ExamData.collection.insert(jsonObjectsToInsert, function (err){
 			if(err) return onError(err);
